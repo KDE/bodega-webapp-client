@@ -1,0 +1,3 @@
+* Install: npm Install
+* Run: ./main.sh
+* use jshint in order to check your code: make check
