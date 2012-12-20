@@ -1,0 +1,12 @@
+extends layout
+block body
+  .title
+    h1 Login with your Make Play Live Account
+    form.well(method='POST', id='login', onsubmit='return validateForm();')
+      fieldset.control-group(id='field-control')
+        .input
+          input.xlarge(type='text', placeholder='Enter your Username', required, id='username')
+        .input
+          input.xlarge(type='password', placeholder='Enter your Password', required, id='password')
+        .action
+          input.btn-primary(type='submit',id='loginButton', value='Connect!')
