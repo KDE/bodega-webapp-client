@@ -5,8 +5,8 @@ block body
     form.well(method='POST', id='login', onsubmit='return validateForm();')
       fieldset.control-group(id='field-control')
         .input
-          input.xlarge(type='text', placeholder='Enter your Username', required, id='username')
+          input.xlarge(type='text', placeholder='Enter your Username', name='username', required)
         .input
-          input.xlarge(type='password', placeholder='Enter your Password', required, id='password')
+          input.xlarge(type='password', placeholder='Enter your Password', name='password', required)
         .action
           input.btn-primary(type='submit',id='loginButton', value='Connect!')

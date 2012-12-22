@@ -6,10 +6,13 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
+var fs = require('fs');
 
 var app = module.exports= express();
 
 GLOBAL.app = app;
+
+app.config = JSON.parse(fs.readFileSync(('./config.json'), 'utf8'));
 
 app.configure(function() {
     app.set('port', process.env.PORT || 3300);
@@ -18,6 +21,7 @@ app.configure(function() {
     app.use(express.favicon());
     app.use(express.logger('dev'));
     app.use(express.bodyParser());
+
     //app.use(express.methodOverride());
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
@@ -49,6 +53,11 @@ app.configure('test', function() {
 app.configure('production', function() {
     app.use(express.errorHandler());
 });
+
+
+var bodega = require('./lib/bodega.js').BodegaManager;
+var BodegaManager = new bodega();
+app.BodegaManager = BodegaManager;
 
 require("./routes.js");
 
