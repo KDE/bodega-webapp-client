@@ -7,6 +7,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
+var RedisStore = require('connect-redis')(express);
 
 var app = module.exports= express();
 
@@ -23,9 +24,13 @@ app.configure(function() {
     app.use(express.bodyParser());
 
     //app.use(express.methodOverride());
-    app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
 
+    app.use(express.cookieParser());
+    app.use(express.session({ secret: "love cookies",
+                              store: new RedisStore() }));
+
+    app.use(app.router);
     app.use(function(req, res, next) {
         res.render('404.jade', {});
     });

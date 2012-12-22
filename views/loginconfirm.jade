@@ -1,0 +1,14 @@
+extend layout
+block body
+    .page-header
+      //TODO
+      //* remove all the bodega and MakePlayLive from the ui.
+      //put them in config jade and take them with app.config.appname for
+      //bodega and app.config.network for MakePlayLive
+      h1 Bodega MakePlayLive Addon Store
+    if success === true
+      .alert.alert-success.success
+        | #{message}
+    else
+      .alert.alert-error.error
+        | #{message}
