@@ -8,23 +8,22 @@ function isAuthorized(req, res, next)
     }
 }
 
-/*
- * GET home page.
- */
 app.get('/', function(req, res){
     //res.render('index');
 });
 
+//login
 app.get('/login', function(req, res) {
-    res.render('login')
+    res.render('login');
 })
 
 app.post('/login', function(req, res){
-    app.BodegaManager.login(req, res)
-    //res.render('index');
+    app.BodegaManager.login(req, res);
 });
 
 app.get('/login/confirm', function(req, res){
-    app.BodegaManager.loginconfirm(req, res)
-    //res.render('index');
+    app.BodegaManager.loginconfirm(req, res);
 });
+
+//register
+
