@@ -1,0 +1,24 @@
+extends layout
+block body
+  .title
+    h1 Create your own Make Play Live Account
+    script
+      function validateForm() {
+        if (!$('#password').val().length < 8) {
+            console.log("adsdsaadsdsa");
+            $('#password').attr('placeholder', 'Your password must be at least 8 digits.')
+            return false;
+        }
+      }
+    form.well(method='POST', id='login', onsubmit='return validateForm();')
+      fieldset.control-group(id='field-control')
+        .input
+          input.xlarge(type='text', placeholder='Enter your Firstname', name='firstname', required)
+        .input
+          input.xlarge(type='text', placeholder='Enter your Lastname', name='lastname', required)
+        .input
+          input.xlarge(type='text', placeholder='Enter your Email Adress', name='email', required)
+        .input
+          input.xlarge(type='password', placeholder='Enter your Password', name='password', id='password' , required)
+        .action
+          input.btn-primary(type='submit',id='loginButton', value='Create My New Account!')

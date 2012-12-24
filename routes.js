@@ -26,4 +26,10 @@ app.get('/login/confirm', function(req, res){
 });
 
 //register
+app.get('/register', function(req, res) {
+    res.render('register')
+});
 
+app.get('/register/confirm', function(req, res) {
+    res.render('registerconfirm')
+});
