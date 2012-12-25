@@ -27,9 +27,12 @@ app.get('/login/confirm', function(req, res){
 
 //register
 app.get('/register', function(req, res) {
-    res.render('register')
+    res.render('register');
+});
+app.post('/register', function(req, res) {
+    app.BodegaManager.register(req, res);
 });
 
 app.get('/register/confirm', function(req, res) {
-    res.render('registerconfirm')
+    res.render('registerconfirm');
 });
