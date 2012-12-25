@@ -4,13 +4,13 @@ block body
     h1 Create your own Make Play Live Account
     script
       function validateForm() {
-        if (!$('#password').val().length < 8) {
+        /*if (!$('#password').val().length < 8) {
             console.log("adsdsaadsdsa");
             $('#password').attr('placeholder', 'Your password must be at least 8 digits.')
             return false;
-        }
+        }*/
       }
-    form.well(method='POST', id='login', onsubmit='return validateForm();')
+    form.well(method='POST', id='register', onsubmit='return validateForm();')
       fieldset.control-group(id='field-control')
         .input
           input.xlarge(type='text', placeholder='Enter your Firstname', name='firstname', required)
