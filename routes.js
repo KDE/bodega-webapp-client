@@ -42,3 +42,12 @@ app.get('/register/confirm', function(req, res) {
      network: app.config.network
     });
 });
+
+app.get('/account/modify', function(req, res) {
+    res.render('accountmodify', {
+     firstname: "name",
+     lastname: "lastname",
+     email: "email",
+     network: app.config.network
+    });
+});

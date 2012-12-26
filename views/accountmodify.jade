@@ -1,0 +1,53 @@
+extends layout
+block head
+  title Modify your own #{network} Account
+block body
+  .title
+    h1(align="center") Modify your #{network} Account
+    script
+      function validateForm() {
+
+        if ($('#password1').val() !== $('#password2').val()) {
+            $('#password1').attr('placeholder', 'Your passwords does not match.');
+            $('#password2').attr('placeholder', 'Your passwords does not match.');
+            $('#field-control2').addClass('error');
+            $('#help-password').text('Your passwords does not match');
+            return false;
+        } else if ($('#password1').val().length < 8 || $('#password2').val() < 8 ) {
+            $('#password1').attr('placeholder', 'Your password must be at least 8 digits.');
+            $('#password2').attr('placeholder', 'Your password must be at least 8 digits.');
+            $('#field-control2').addClass('error');
+            $('#help-password').text('Your password must be at least 8 digits');
+            return false;
+       }
+      }
+
+    form.well(method='POST', id='modifyAccount')
+      fieldset.control-group(id='field-control')
+        .input
+          .label.badge-info Name
+          input.xlarge(type='text', value='#{firstname}', name='firstname')
+        .input
+          .label.badge-info Last name
+          input.xlarge(type='text', value='#{lastname}', name='lastname')
+        .input
+          .label.badge-info Email
+          input.xlarge(type='text',  value='#{email}', name='email')
+        .input
+        .action
+          input.btn-primary(type='submit',id='updateAccount', value='Update Account')
+
+    form.well(method='POST', id='modifyPassword', onsubmit='return validateForm();')
+      fieldset.control-group(id='field-control2')
+        span.help-control(id='help-password')
+        .input
+          .label.badge-info New Password
+          input.xlarge(type='password', placeholder='Type your new password', name='password1', id='password1')
+        .input
+          .label.badge-info Confirm Password
+          input.xlarge(type='password', placeholder='Retype your password', name='password2', id='password2')
+        .input
+        .action
+          input.btn-primary(type='submit',id='updatePassword', value='Update Password')
+
+
