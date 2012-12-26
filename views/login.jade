@@ -1,7 +1,9 @@
 extends layout
+block head
+  title Login With Your #{network} Account
 block body
   .title
-    h1 Login with your #{network} Account
+    h1(align="center") Login with your #{network} Account
     form.well(method='POST', id='login', onsubmit='return validateForm();')
       fieldset.control-group(id='field-control')
         .input

@@ -1,11 +1,9 @@
 extend layout
+block head
+    title Login confirmation
 block body
     .page-header
-      //TODO
-      //* remove all the bodega and MakePlayLive from the ui.
-      //put them in config jade and take them with app.config.appname for
-      //bodega and app.config.network for MakePlayLive
-      h1 Bodega MakePlayLive Addon Store
+      h1(align="center") Bodega #{network} Addon Store
     if success === true
       .alert.alert-success.success
         | #{message}
