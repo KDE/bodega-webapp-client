@@ -1,5 +1,6 @@
 {
     "bodega": "localhost",
     "port": 3000,
-    "api": "/bodega/v1/json/"
+    "api": "/bodega/v1/json/",
+    "network" : "MakePlayLive"
 }

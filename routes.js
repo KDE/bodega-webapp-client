@@ -14,7 +14,9 @@ app.get('/', function(req, res){
 
 //login
 app.get('/login', function(req, res) {
-    res.render('login');
+    res.render('login', {
+     network: app.config.network
+    });
 })
 
 app.post('/login', function(req, res){
@@ -27,7 +29,9 @@ app.get('/login/confirm', function(req, res){
 
 //register
 app.get('/register', function(req, res) {
-    res.render('register');
+    res.render('register', {
+     network: app.config.network
+    });
 });
 app.post('/register', function(req, res) {
     app.BodegaManager.register(req, res);
