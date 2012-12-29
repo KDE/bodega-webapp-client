@@ -19,6 +19,10 @@ app.get('/login', function(req, res) {
     });
 })
 
+app.get('/login/info', function(req, res) {
+    app.BodegaManager.loginInfo(req, res);
+})
+
 app.post('/login', function(req, res){
     app.BodegaManager.login(req, res);
 });
@@ -51,3 +55,9 @@ app.get('/account/modify', function(req, res) {
      network: app.config.network
     });
 });
+
+//acount
+app.get('/account', function(req, res) {
+    res.render('account');
+});
+
