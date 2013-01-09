@@ -59,7 +59,8 @@ app.get('/account/modify', function(req, res) {
 });
 
 app.get('/account', function(req, res) {
-    res.render('account');
+    res.redirect('/account/modify');
+    //res.render('account');
 });
 
 app.get('/logout', function(req, res) {
