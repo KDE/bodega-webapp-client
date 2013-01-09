@@ -10,6 +10,7 @@ function isAuthorized(req, res, next)
 
 app.get('/', function(req, res){
     //res.render('index');
+    res.redirect('login');
 });
 
 //login
@@ -58,11 +59,9 @@ app.get('/account/modify', function(req, res) {
 
 app.get('/logout', function(req, res) {
     req.session.destroy();
-    //TODO when the logininfo will go into
-    //its own js file uncomment the following line
-    //and of course create a app.cookie in the login.js file
-//    delete app.cookie;
-    res.redirect('/login');
+    delete app.cookie;
+
+    res.redirect('/');
 });
 
 //acount
