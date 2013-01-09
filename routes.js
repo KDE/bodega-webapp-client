@@ -48,6 +48,7 @@ app.get('/register/confirm', function(req, res) {
     });
 });
 
+//account
 app.get('/account/modify', function(req, res) {
     res.render('accountmodify', {
         firstname: "name",
@@ -57,15 +58,14 @@ app.get('/account/modify', function(req, res) {
     });
 });
 
+app.get('/account', function(req, res) {
+    res.render('account');
+});
+
 app.get('/logout', function(req, res) {
     req.session.destroy();
     delete app.cookie;
 
     res.redirect('/');
-});
-
-//acount
-app.get('/account', function(req, res) {
-    res.render('account');
 });
 
