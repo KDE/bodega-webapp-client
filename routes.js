@@ -15,7 +15,7 @@ app.get('/', function(req, res){
 //login
 app.get('/login', function(req, res) {
     res.render('login', {
-     network: app.config.network
+        network: app.config.network
     });
 })
 
@@ -34,7 +34,7 @@ app.get('/login/confirm', function(req, res){
 //register
 app.get('/register', function(req, res) {
     res.render('register', {
-     network: app.config.network
+        network: app.config.network
     });
 });
 app.post('/register', function(req, res) {
@@ -43,16 +43,16 @@ app.post('/register', function(req, res) {
 
 app.get('/register/confirm', function(req, res) {
     res.render('registerconfirm', {
-     network: app.config.network
+        network: app.config.network
     });
 });
 
 app.get('/account/modify', function(req, res) {
     res.render('accountmodify', {
-     firstname: "name",
-     lastname: "lastname",
-     email: "email",
-     network: app.config.network
+        firstname: "name",
+        lastname: "lastname",
+        email: "email",
+        network: app.config.network
     });
 });
 
