@@ -56,6 +56,15 @@ app.get('/account/modify', function(req, res) {
     });
 });
 
+app.get('/logout', function(req, res) {
+    req.session.destroy();
+    //TODO when the logininfo will go into
+    //its own js file uncomment the following line
+    //and of course create a app.cookie in the login.js file
+//    delete app.cookie;
+    res.redirect('/login');
+});
+
 //acount
 app.get('/account', function(req, res) {
     res.render('account');
