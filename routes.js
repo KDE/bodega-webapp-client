@@ -58,6 +58,10 @@ app.get('/account/modify', isAuthorized, function(req, res) {
     });
 });
 
+app.post('/account/modify', function(req, res) {
+    app.BodegaManager.accountmodify(req, res);
+});
+
 app.get('/account', isAuthorized, function(req, res) {
     res.redirect('/account/modify');
     //res.render('account');
