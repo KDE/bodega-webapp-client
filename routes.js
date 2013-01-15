@@ -49,11 +49,12 @@ app.get('/register/confirm', function(req, res) {
 });
 
 //account
-app.get('/account/modify', isAuthorized, function(req, res) {
+app.get('/account/modify',isAuthorized, function(req, res) {
+    console.log(req.session);
     res.render('accountmodify', {
-        firstname: "name",
-        lastname: "lastname",
-        email: "email",
+        firstname: req.session.firstname,
+        lastname: req.session.lastname,
+        email: req.session.email,
         network: app.config.network
     });
 });
