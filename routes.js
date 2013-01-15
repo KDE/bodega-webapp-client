@@ -49,7 +49,7 @@ app.get('/register/confirm', function(req, res) {
 });
 
 //account
-app.get('/account/modify', function(req, res) {
+app.get('/account/modify', isAuthorized, function(req, res) {
     res.render('accountmodify', {
         firstname: "name",
         lastname: "lastname",
@@ -58,7 +58,7 @@ app.get('/account/modify', function(req, res) {
     });
 });
 
-app.get('/account', function(req, res) {
+app.get('/account', isAuthorized, function(req, res) {
     res.redirect('/account/modify');
     //res.render('account');
 });
