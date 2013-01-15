@@ -63,6 +63,11 @@ app.get('/account', isAuthorized, function(req, res) {
     //res.render('account');
 });
 
+app.get('/account/modify/confirm', isAuthorized, function(req, res) {
+    res.render('accountmodifyconfirm');
+//    res.redirect('/');
+});
+
 app.get('/logout', function(req, res) {
     req.session.destroy();
     delete app.cookie;
