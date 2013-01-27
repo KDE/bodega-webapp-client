@@ -7,14 +7,14 @@ block body
     script
       function validateForm() {
 
-        if ($('#password1').val() !== $('#password2').val()) {
-            $('#password1').attr('placeholder', 'Your passwords does not match.');
+        if ($('#password').val() !== $('#password2').val()) {
+            $('#password').attr('placeholder', 'Your passwords does not match.');
             $('#password2').attr('placeholder', 'Your passwords does not match.');
             $('#field-control2').addClass('error');
             $('#help-password').text('Your passwords does not match');
             return false;
-        } else if ($('#password1').val().length < 8 || $('#password2').val() < 8 ) {
-            $('#password1').attr('placeholder', 'Your password must be at least 8 digits.');
+        } else if ($('#password').val().length < 8 || $('#password2').val() < 8 ) {
+            $('#password').attr('placeholder', 'Your password must be at least 8 digits.');
             $('#password2').attr('placeholder', 'Your password must be at least 8 digits.');
             $('#field-control2').addClass('error');
             $('#help-password').text('Your password must be at least 8 digits');
@@ -44,9 +44,9 @@ block body
       fieldset.control-group(id='field-control2')
         span.help-control(id='help-password')
         .control-group
-          label.control-label(for='password1') New Password
+          label.control-label(for='password') New Password
           .controls
-            input.xlarge(type='password', placeholder='Type your new password', name='password1', id='password1')
+            input.xlarge(type='password', placeholder='Type your new password', name='password', id='password')
         .control-group
           label.control-label(for='password2') Confirm Password
           .controls

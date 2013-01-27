@@ -10,7 +10,7 @@ function isAuthorized(req, res, next)
 
 app.get('/', function(req, res){
     //res.render('index');
-    res.redirect('login');
+    res.redirect('/login');
 });
 
 //login
