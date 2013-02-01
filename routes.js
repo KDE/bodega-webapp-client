@@ -64,15 +64,33 @@ app.post('/account/modify', function(req, res) {
 });
 
 app.get('/account/modify/confirm',isAuthorized, function(req, res) {
-    res.render('accountmodifyconfirm', {
-        result: app.operationStatus,
-        network: app.config.network
+     res.render('accountmodifyconfirm', {
+         result: app.operationStatus,
+         network: app.config.network
     });
 });
 
 app.get('/account', function(req, res) {
     res.redirect('/account/modify');
     //res.render('account');
+});
+
+app.get('/account/resetPassword', function(req, res){
+    res.render('resetpassword', {
+         network: app.config.network
+   });
+});
+
+app.post('/account/resetPassword', function(req, res){
+    app.BodegaManager.resetpassword(req,res);
+});
+
+app.get('/account/resetPassword/confirm', function(req, res){
+    res.render('resetpasswordconfirm', {
+        message: app.operationMessage,
+        result: app.operationStatus,
+        network: app.config.network
+    });
 });
 
 app.get('/logout', function(req, res) {
