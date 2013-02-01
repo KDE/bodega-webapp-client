@@ -63,14 +63,16 @@ app.post('/account/modify', function(req, res) {
     app.BodegaManager.accountmodify(req, res);
 });
 
-app.get('/account', isAuthorized, function(req, res) {
-    res.redirect('/account/modify');
-    //res.render('account');
+app.get('/account/modify/confirm',isAuthorized, function(req, res) {
+    res.render('accountmodifyconfirm', {
+        result: app.operationStatus,
+        network: app.config.network
+    });
 });
 
-app.get('/account/modify/confirm', isAuthorized, function(req, res) {
-    res.render('accountmodifyconfirm');
-//    res.redirect('/');
+app.get('/account', function(req, res) {
+    res.redirect('/account/modify');
+    //res.render('account');
 });
 
 app.get('/logout', function(req, res) {
