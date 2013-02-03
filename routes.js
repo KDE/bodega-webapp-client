@@ -8,9 +8,18 @@ function isAuthorized(req, res, next)
     }
 }
 
-app.get('/', function(req, res){
+app.get('/', function(req, res) {
     //res.render('index');
     res.redirect('/login');
+});
+
+app.get('/index',  isAuthorized, function(req, res) {
+    app.BodegaManager.index(req, res);
+});
+
+//TODO what will happen if we have 3 subcategories????? BOOM!!!!!!!!
+app.get('/index/:category/:subcategory/:pageId', isAuthorized, function(req, res) {
+    app.BodegaManager.index(req, res);
 });
 
 //login
@@ -18,11 +27,11 @@ app.get('/login', function(req, res) {
     res.render('login', {
         network: app.config.network
     });
-})
+});
 
 app.get('/login/info', function(req, res) {
     app.BodegaManager.loginInfo(req, res);
-})
+});
 
 app.post('/login', function(req, res){
     app.BodegaManager.login(req, res);
@@ -38,6 +47,7 @@ app.get('/register', function(req, res) {
         network: app.config.network
     });
 });
+
 app.post('/register', function(req, res) {
     app.BodegaManager.register(req, res);
 });
