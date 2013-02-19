@@ -17,11 +17,6 @@ app.get('/index', isAuthorized, function(req, res) {
     app.BodegaManager.index(req, res);
 });
 
-//TODO what will happen if we have 3 subcategories????? BOOM!!!!!!!!
-app.get('/index/:category/:subcategory?/:pageId?',  isAuthorized, function(req, res) {
-    app.BodegaManager.index(req, res);
-});
-
 //login
 app.get('/login', function(req, res) {
     res.render('login', {
