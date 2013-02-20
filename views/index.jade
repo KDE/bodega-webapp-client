@@ -1,4 +1,27 @@
 extends layout
 block head
   title Welcome to the #{network} Web Store
+  script
+    var sockjs_url = '/indexTakeAssets';
+    var sockjs = new SockJS(sockjs_url);
+    sockjs.onopen = function() {
+      console.log('[*] open', sockjs.protocol);
+    }
+
+    sockjs.onmessage = function(e) {
+      console.log('[.] message', e.data);
+    }
+
+    sockjs.onclose = function() {
+      console.log('[*] close');
+    }
+
+    function do1() {
+      sockjs.send("foo1");
+      alert("foo")
+      return false;
+    }
+
 block body
+
+  button(type="button", onclick='return do1();')

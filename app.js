@@ -8,8 +8,9 @@ var http = require('http');
 var path = require('path');
 var fs = require('fs');
 var RedisStore = require('connect-redis')(express);
+var sockjs  = require('sockjs');
 
-var app = module.exports= express();
+var app = module.exports = express();
 
 GLOBAL.app = app;
 
@@ -59,6 +60,8 @@ app.configure('production', function() {
     app.use(express.errorHandler());
 });
 
+//app.server must be initialized before BodegaManager!!
+app.server = http.createServer(app);
 
 var bodega = require('./lib/bodega.js').BodegaManager;
 var BodegaManager = new bodega();
@@ -66,6 +69,6 @@ app.BodegaManager = BodegaManager;
 
 require("./routes.js");
 
-http.createServer(app).listen(app.get('port'), function() {
+app.server.listen(app.get('port'), function() {
   console.log("Bodega web application client listening on port " + app.get('port'));
 });
