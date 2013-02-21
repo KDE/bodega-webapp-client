@@ -1,0 +1,40 @@
+extends layout
+block head
+  title Create your own #{network} Account
+  script
+    function foo() {
+      alert("this is the dropdown")
+      return false
+    }
+block body
+  .title
+    h1(align="center") Create your own #{network} Account
+    .container-fluid
+      .row-fluid
+        .span1
+          ul.nav.nav-tabs.nav-pills.nav-stacked
+            each currentChannel, iterator in channel
+                //each channelValue in channel[iterator].name
+                li.dropdown
+                  a.dropdown-toggle(data-toggle='dropdown', href='#') #{currentChannel.name}
+                    b.caret
+                  if (currentChannel.cat)
+                    ul.dropdown-menu
+                      each category, categoryId in currentChannel.cat
+                        li
+                          a(href="#") #{category.name}
+        .span11
+          each currentChannel, channelIterator in channel
+            if (currentChannel.assets)
+              each asset, assetIterator in currentChannel.assets
+                if (((assetIterator) % 3) === 0)
+                  .row-fluid.show-grid
+                  h1 #{assetIterator}
+                .span4
+                  .thumbnails
+                  .span4
+                    img(src="http://#{asset.image}", alt="")
+                    h1 #{asset.name}
+                    p Author Name: #{asset.author}
+                    p Descriptiong: #{asset.description}
+                    p License: #{asset.license}
