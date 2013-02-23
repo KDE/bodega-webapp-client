@@ -24,6 +24,11 @@ block head
         sockjs.send(categoryId, categoryPage);
       });
 
+      $('.dropdown-menu > li a').click(function(event) {
+        var subCategoryId = $(this).attr('id');
+        console.log("subCategory id " + subCategoryId);
+      })
+
     });
 block body
   .title
@@ -40,6 +45,6 @@ block body
                   ul.dropdown-menu
                     for subCategory in category.subcategories
                       li
-                        a(href="#") #{subCategory.name}
+                        a(href="#", id='#{subCategory.id}') #{subCategory.name}
       .span10
       -console.log(categories)
