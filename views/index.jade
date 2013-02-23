@@ -20,14 +20,14 @@ block head
       $('.dropdown-toggle').click(function(event) {
         var categoryId = $(this).attr('id');
         var categoryPage = 1;
-        console.log("category id " + categoryId )
         sockjs.send(categoryId, categoryPage);
       });
 
       $('.dropdown-menu > li a').click(function(event) {
         var subCategoryId = $(this).attr('id');
-        console.log("subCategory id " + subCategoryId);
-      })
+        var subCategoryPage = 1;
+        sockjs.send(subCategoryId, subCategoryPage);
+      });
 
     });
 block body
