@@ -25,3 +25,18 @@ block head
 block body
 
   button(type="button", onclick='return do1();')
+  .container-fluid
+    .row-fluid
+      .span1
+        ul.nav.nav-tabs.nav-pills.nav-stacked
+          for category in categories
+            li.dropdown
+              a.dropdown-toggle(data-toogle='dropdown', href='#') #{category.name}
+                b.caret
+              //ul.dropdown
+                //for subCategory in categories.subcategories
+                  //li
+                    //a(href='#') subCategory.name
+  for category in categories
+    -console.log(category)
+    p #{category.name}
