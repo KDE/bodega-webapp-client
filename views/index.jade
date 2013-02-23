@@ -16,6 +16,14 @@ block head
       sockjs.onclose = function() {
         console.log('[*] close');
       }
+
+      $('.dropdown-toggle').click(function(event) {
+        var categoryId = $(this).attr('id');
+        var categoryPage = 1;
+        console.log("category id " + categoryId )
+        sockjs.send(categoryId, categoryPage);
+      });
+
     });
 block body
   .title
@@ -26,7 +34,7 @@ block body
         ul.nav.nav-tabs.nav-pills.nav-stacked
           for category in categories
             li.dropdown
-              a.dropdown-toggle(data-toggle='dropdown', href='#') #{category.name}
+              a.dropdown-toggle(data-toggle='dropdown', href='#', id='#{category.id}') #{category.name}
                 if (category.subcategories.length > 0)
                   b.caret
                   ul.dropdown-menu
