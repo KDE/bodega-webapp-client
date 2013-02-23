@@ -18,7 +18,8 @@ block head
       }
     });
 block body
-
+  .title
+    h1(align='center') Welcome to the #{network} Web Store
   .container-fluid
     .row-fluid
       .span2
@@ -26,9 +27,11 @@ block body
           for category in categories
             li.dropdown
               a.dropdown-toggle(data-toggle='dropdown', href='#') #{category.name}
-                b.caret
-              ul.dropdown-menu
-                for subCategory in category.subcategories
-                  li
-                    a(href="#") #{subCategory.name}
+                if (category.subcategories.length > 0)
+                  b.caret
+                  ul.dropdown-menu
+                    for subCategory in category.subcategories
+                      li
+                        a(href="#") #{subCategory.name}
       .span10
+      -console.log(categories)
