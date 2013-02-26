@@ -5,6 +5,7 @@ block head
     $(document).ready(function() {
       var sockjs_url = '/indexTakeAssets';
       var sockjs = new SockJS(sockjs_url);
+      var categoryPage;
       sockjs.onopen = function() {
         console.log('[*] open', sockjs.protocol);
       }
@@ -28,14 +29,14 @@ block head
       $('.dropdown-toggle').click(function(event) {
         removeElementsFromIndex();
         var categoryId = $(this).attr('id');
-        var categoryPage = 1;
+        categoryPage = 1;
         sockjs.send(categoryId, categoryPage);
       });
 
       $('.dropdown-menu > li a').click(function(event) {
         removeElementsFromIndex();
         var subCategoryId = $(this).attr('id');
-        var subCategoryPage = 1;
+        subCategoryPage = 1;
         sockjs.send(subCategoryId, subCategoryPage);
       });
 
@@ -76,6 +77,40 @@ block head
         }
       }
 
+      function pageNumber() {
+        console.log($('.pagination li.active').text());
+      }
+
+      $('.pagination li#Next').click(function(event) {
+        var currentActivePage = $('.pagination ul li.active');
+        var nextPage = currentActivePage.next();
+        if (nextPage.attr('id') != 'Next') {
+          currentActivePage.removeClass('active');
+          nextPage.addClass('active');
+        }
+      });
+
+      $('.pagination li#Prev').click(function(event) {
+        var currentActivePage = $('.pagination ul li.active');
+        var prevPage = currentActivePage.prev();
+        if (prevPage.attr('id') != 'Prev') {
+          currentActivePage.removeClass('active');
+          prevPage.addClass('active');
+        }
+      });
+
+
+      $('.pagination li').click(function(event) {
+        var currentPage = $(this).children('a').text();
+        if (currentPage != "Prev" && currentPage != "Next") {
+          $('.pagination li.active').removeClass('active');
+          $(this).addClass('active');
+        }
+      });
+
+
+
+      pageNumber();
 
     });
 block body
@@ -101,3 +136,13 @@ block body
                 .thumbnail
                   p Name
 
+        .pagination
+          ul
+            li(id='Prev')
+              a(href='#') Prev
+            li.active(id='pageid_1')
+              a(href='#') 1
+            li(id='pageid_2')
+              a(href='#') 2
+            li(id='Next')
+              a(href='#' ) Next
