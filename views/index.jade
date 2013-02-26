@@ -11,9 +11,14 @@ block head
 
       sockjs.onmessage = function(e) {
         var result = $.parseJSON(e.data);
+        var i = 0;
         $.each(result, function(key, value) {
-          console.log(value.name)
+          populateTemplate(value.id, value.name, i%3);
+          i = i + 1;
         });
+
+        var template = $('.row-fluid.show-grid#separator-thumbnail');
+        template.hide();
       }
 
       sockjs.onclose = function() {
@@ -31,6 +36,24 @@ block head
         var subCategoryPage = 1;
         sockjs.send(subCategoryId, subCategoryPage);
       });
+
+      function populateTemplate(id, name, separator) {
+        if (separator == 0) {
+          var separatorContent = $('.row-fluid.show-grid#separator-thumbnail').clone().appendTo($('.span10')).end();
+          //in order to clone our template we need to remove its id everytime
+          //if we don't remove it then we are going to have multiple entries on the webpage
+          separatorContent.attr('id', '');
+          var thumbnailContent = $('.span4#thumbnail-template:last');
+          thumbnailContent.attr('id', id);
+          thumbnailContent.children().children('p').text(name);
+        } else {
+          var content = $('.span4#thumbnail-template:last').clone().appendTo($('.thumbnails:last')).end();
+          content.children().children('p').text(name);
+          content.attr('id', id);
+        }
+      }
+
+
 
     });
 block body
@@ -50,4 +73,9 @@ block body
                       li
                         a(href="#", id='#{subCategory.id}') #{subCategory.name}
       .span10
-      -console.log(categories)
+        .row-fluid.show-grid(id='separator-thumbnail')
+            ul.thumbnails
+              li.span4(id='thumbnail-template')
+                .thumbnail
+                  p Name
+
