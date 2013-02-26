@@ -11,14 +11,14 @@ block head
 
       sockjs.onmessage = function(e) {
         var result = $.parseJSON(e.data);
+        templateStatus(true);
         var i = 0;
         $.each(result, function(key, value) {
           populateTemplate(value.id, value.name, i%3);
           i = i + 1;
         });
 
-        var template = $('.row-fluid.show-grid#separator-thumbnail');
-        template.hide();
+        templateStatus(false);
       }
 
       sockjs.onclose = function() {
@@ -26,12 +26,14 @@ block head
       }
 
       $('.dropdown-toggle').click(function(event) {
+        removeElementsFromIndex();
         var categoryId = $(this).attr('id');
         var categoryPage = 1;
         sockjs.send(categoryId, categoryPage);
       });
 
       $('.dropdown-menu > li a').click(function(event) {
+        removeElementsFromIndex();
         var subCategoryId = $(this).attr('id');
         var subCategoryPage = 1;
         sockjs.send(subCategoryId, subCategoryPage);
@@ -53,6 +55,26 @@ block head
         }
       }
 
+      function removeElementsFromIndex() {
+        //Our template has the id separator-thumbnail. So we select all
+        //the thumbnails that doesn't have the id separator-thumbnail
+        //We need our template for the feature assets that we are going to
+        //call
+        var elements = $('.row-fluid.show-grid:not(#separator-thumbnail)');
+        elements.remove();
+      }
+
+      function templateStatus(setVisible) {
+        var template = $('.row-fluid.show-grid#separator-thumbnail');
+        //When our assets are being printed into the UI then we must hide our template.
+        //But we must make it again visible for the future assets that we are going to call
+        //overwise our future assets will be invisible.
+        if (setVisible) {
+          template.show();
+        } else {
+          template.hide();
+        }
+      }
 
 
     });
