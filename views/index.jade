@@ -10,7 +10,10 @@ block head
       }
 
       sockjs.onmessage = function(e) {
-        console.log('[.] message', e.data);
+        var result = $.parseJSON(e.data);
+        $.each(result, function(key, value) {
+          console.log(value.name)
+        });
       }
 
       sockjs.onclose = function() {
