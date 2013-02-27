@@ -33,14 +33,16 @@ block head
         var categoryId = $(this).attr('id');
         subCategoryId = categoryId;
         categoryPage = pageNumber();
-        sockjs.send(categoryId, categoryPage);
+        var data = categoryId + '/' + categoryPage;
+        sockjs.send(data);
       });
 
       $('.dropdown-menu > li a').click(function(event) {
         removeElementsFromIndex();
         subCategoryId = $(this).attr('id');
         subCategoryPage = pageNumber();
-        sockjs.send(subCategoryId, subCategoryPage);
+        var data = subCategoryId + '/' + subCategoryPage;
+        sockjs.send(data);
       });
 
       function populateTemplate(id, name, separator) {
@@ -94,7 +96,8 @@ block head
           currentActivePage.removeClass('active');
           nextPage.addClass('active');
           removeElementsFromIndex();
-          sockjs.send(subCategoryId, pageNumber());
+          var data = subCategoryId + '/' + pageNumber();
+          sockjs.send(data);
         }
       });
 
@@ -105,7 +108,8 @@ block head
           currentActivePage.removeClass('active');
           prevPage.addClass('active');
           removeElementsFromIndex();
-          sockjs.send(subCategoryId, pageNumber());
+          var data = subCategoryId + '/' + pageNumber();
+          sockjs.send(data);
         }
       });
 
@@ -116,7 +120,8 @@ block head
           $('.pagination li.active').removeClass('active');
           $(this).addClass('active');
           removeElementsFromIndex();
-          sockjs.send(subCategoryId, pageNumber());
+          var data = subCategoryId + '/' + pageNumber();
+          sockjs.send(data);
         }
       });
 
