@@ -6,11 +6,13 @@ block head
       var sockjs_url = '/indexTakeAssets';
       var sockjs = new SockJS(sockjs_url);
       var categoryPage;
+      var subCategoryId;
       sockjs.onopen = function() {
         console.log('[*] open', sockjs.protocol);
       }
 
       sockjs.onmessage = function(e) {
+        console.log('testtttttttttttttttt');
         var result = $.parseJSON(e.data);
         templateStatus(true);
         var i = 0;
@@ -35,14 +37,14 @@ block head
 
       $('.dropdown-menu > li a').click(function(event) {
         removeElementsFromIndex();
-        var subCategoryId = $(this).attr('id');
-        subCategoryPage = 1;
+        subCategoryId = $(this).attr('id');
+        subCategoryPage = pageNumber();
         sockjs.send(subCategoryId, subCategoryPage);
       });
 
       function populateTemplate(id, name, separator) {
         if (separator == 0) {
-          var separatorContent = $('.row-fluid.show-grid#separator-thumbnail').clone().appendTo($('.span10')).end();
+          var separatorContent = $('.row-fluid.show-grid#separator-thumbnail').clone().insertBefore($('.pagination')).end();
           //in order to clone our template we need to remove its id everytime
           //if we don't remove it then we are going to have multiple entries on the webpage
           separatorContent.attr('id', '');
@@ -87,6 +89,9 @@ block head
         if (nextPage.attr('id') != 'Next') {
           currentActivePage.removeClass('active');
           nextPage.addClass('active');
+          console.log(subCategoryId);
+          removeElementsFromIndex();
+          sockjs.send(subCategoryId, pageNumber());
         }
       });
 
@@ -96,6 +101,8 @@ block head
         if (prevPage.attr('id') != 'Prev') {
           currentActivePage.removeClass('active');
           prevPage.addClass('active');
+          removeElementsFromIndex();
+          sockjs.send(subCategoryId, pageNumber());
         }
       });
 
