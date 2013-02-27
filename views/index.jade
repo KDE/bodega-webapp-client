@@ -17,7 +17,7 @@ block head
         templateStatus(true);
         var i = 0;
         $.each(result, function(key, value) {
-          populateTemplate(value.id, value.name, i%3);
+          populateTemplate(value.id, value.name, value.author, value.version, value.license, i%3);
           i = i + 1;
         });
 
@@ -47,7 +47,7 @@ block head
         sockjs.send(data);
       });
 
-      function populateTemplate(id, name, separator) {
+      function populateTemplate(id, name, author, version, license, separator) {
         if (separator === 0) {
           var separatorContent = $('.row-fluid.show-grid#separator-thumbnail').clone().insertBefore($('.pagination.pagination-centered')).end();
           //in order to clone our template we need to remove its id everytime
@@ -55,11 +55,35 @@ block head
           separatorContent.attr('id', '');
           var thumbnailContent = $('.span4#thumbnail-template:last');
           thumbnailContent.attr('id', id);
-          thumbnailContent.children().children('p').text(name);
+
+          var thumbnailAsset= thumbnailContent.children('.thumbnail');
+          thumbnailAsset.attr('href', '#modalId_' + id);
+          thumbnailAsset.children('p').text(name);
+
+          var modalContent = thumbnailContent.children('.modal.hide.fade');
+          modalContent.attr('id', 'modalId_' + id);
+
+          var modalBody = modalContent.children('.modal-body');
+          modalBody.children('#modalNameId_').text(name);
+          modalBody.children('#modalAuthorId_').text('Author: ' + author);
+          modalBody.children('#modalVersionId_').text('Version: ' + version);
+          modalBody.children('#modalLicenseId_').text('License: ' + license);
         } else {
-          var content = $('.span4#thumbnail-template:last').clone().appendTo($('.thumbnails:last')).end();
-          content.children().children('p').text(name);
-          content.attr('id', id);
+          var thumbnailContent = $('.span4#thumbnail-template:last').clone().appendTo($('.thumbnails:last')).end();
+          thumbnailContent.attr('id', id);
+
+          var thumbnailAsset = thumbnailContent.children('.thumbnail');
+          thumbnailAsset.children('p').text(name);
+          thumbnailAsset.attr('href', '#modalId_' + id);
+
+          var modalContent = thumbnailContent.children('.modal.hide.fade');
+          modalContent.attr('id', 'modalId_' + id);
+
+          var modalBody = modalContent.children('.modal-body');
+          modalBody.children('#modalNameId_').text(name);
+          modalBody.children('#modalAuthorId_').text('Author: ' + author);
+          modalBody.children('#modalVersionId_').text('Version: ' + version);
+          modalBody.children('#modalLicenseId_').text('License: ' + license);
         }
       }
 
@@ -158,9 +182,20 @@ block body
         .row-fluid.show-grid(id='separator-thumbnail')
             ul.thumbnails
               li.span4(id='thumbnail-template')
-                .thumbnail
+                .thumbnail(data-toggle='modal')
                   p Name
-
+                .modal.hide.fade(id='modalId_', tabindex=-1, role='dialog')
+                  .modal-header
+                    h3 header
+                  .modal-body
+                    h3(id='modalImageId_') Image Here
+                    h2(id='modalNameId_')Name
+                    p Free TODO CHANGE THAT WITH REAL DATA
+                    p
+                    h2 Download MAKE THAT A REAL BUTTON WITH REAL DATA
+                    p(id='modalAuthorId_') Author:
+                    p(id='modalVersionId_') Version:
+                    p(id='modalLicenseId_') License:
         .pagination.pagination-centered
           ul
             li(id='Prev')

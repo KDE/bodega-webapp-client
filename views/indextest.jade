@@ -59,9 +59,17 @@ block body
                     p Descriptiong: asset.description
                     p License: asset.license
                 li.span4
-                  .thumbnail
+                  .thumbnail(href='#mymodal', data-toggle='modal')
                     img(src="", alt="")
-                    h1 asset.name
+                    h1 asset.name modal
                     p Author Name: asset.author
                     p Descriptiong: asset.description
                     p License: asset.License
+                  .modal.hide.fade(id='mymodal',tabindex=-1, role='dialog')
+                    .modal-header
+                      h3 modal header
+                    .modal-body
+                      p this is the body
+
+
+
