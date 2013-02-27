@@ -49,7 +49,7 @@ block head
 
       function populateTemplate(id, name, separator) {
         if (separator === 0) {
-          var separatorContent = $('.row-fluid.show-grid#separator-thumbnail').clone().insertBefore($('.pagination')).end();
+          var separatorContent = $('.row-fluid.show-grid#separator-thumbnail').clone().insertBefore($('.pagination.pagination-centered')).end();
           //in order to clone our template we need to remove its id everytime
           //if we don't remove it then we are going to have multiple entries on the webpage
           separatorContent.attr('id', '');
@@ -85,14 +85,14 @@ block head
       }
 
       function pageNumber() {
-        var pageId = $('.pagination li.active').attr('id');
+        var pageId = $('.pagination.pagination-centered li.active').attr('id');
         var id = pageId.replace('pageId_', '');
         console.log("pageId " + id);
         return parseInt(id);
       }
 
-      $('.pagination li#Next').click(function(event) {
-        var currentActivePage = $('.pagination ul li.active');
+      $('.pagination.pagination-centered li#Next').click(function(event) {
+        var currentActivePage = $('.pagination.pagination-centered ul li.active');
         var nextPage = currentActivePage.next();
         if (nextPage.attr('id') !== 'Next') {
           currentActivePage.removeClass('active');
@@ -103,8 +103,8 @@ block head
         }
       });
 
-      $('.pagination li#Prev').click(function(event) {
-        var currentActivePage = $('.pagination ul li.active');
+      $('.pagination.pagination-centered li#Prev').click(function(event) {
+        var currentActivePage = $('.pagination.pagination-centered ul li.active');
         var prevPage = currentActivePage.prev();
         if (prevPage.attr('id') !== 'Prev') {
           currentActivePage.removeClass('active');
@@ -116,10 +116,10 @@ block head
       });
 
 
-      $('.pagination li').click(function(event) {
+      $('.pagination.pagination-centered li').click(function(event) {
         var currentPage = $(this).attr('id');
         if (currentPage !== "Prev" && currentPage !== "Next") {
-          $('.pagination li.active').removeClass('active');
+          $('.pagination.pagination-centered li.active').removeClass('active');
           $(this).addClass('active');
           removeElementsFromIndex();
           var data = subCategoryId + '/' + pageNumber();
@@ -131,9 +131,9 @@ block head
         //when we change our current channel we must reset the page
         //number to the first page. Otherwise the sockjs will
         //load the that specific page for our asset
-        var currentActivePage = $('.pagination ul li.active');
+        var currentActivePage = $('.pagination.pagination-centered ul li.active');
         currentActivePage.removeClass('active');
-        $('.pagination ul li#pageId_1').addClass('active');
+        $('.pagination.pagination-centered ul li#pageId_1').addClass('active');
       }
       pageNumber();
 
@@ -161,7 +161,7 @@ block body
                 .thumbnail
                   p Name
 
-        .pagination
+        .pagination.pagination-centered
           ul
             li(id='Prev')
               a(href='#') Prev
