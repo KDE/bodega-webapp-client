@@ -31,7 +31,8 @@ block head
       $('.dropdown-toggle').click(function(event) {
         removeElementsFromIndex();
         var categoryId = $(this).attr('id');
-        categoryPage = 1;
+        subCategoryId = categoryId;
+        categoryPage = pageNumber();
         sockjs.send(categoryId, categoryPage);
       });
 
@@ -43,7 +44,7 @@ block head
       });
 
       function populateTemplate(id, name, separator) {
-        if (separator == 0) {
+        if (separator === 0) {
           var separatorContent = $('.row-fluid.show-grid#separator-thumbnail').clone().insertBefore($('.pagination')).end();
           //in order to clone our template we need to remove its id everytime
           //if we don't remove it then we are going to have multiple entries on the webpage
@@ -80,16 +81,18 @@ block head
       }
 
       function pageNumber() {
-        console.log($('.pagination li.active').text());
+        var pageId = $('.pagination li.active').attr('id');
+        var id = pageId.replace('pageId_', '');
+        console.log("pageId " + id);
+        return parseInt(id);
       }
 
       $('.pagination li#Next').click(function(event) {
         var currentActivePage = $('.pagination ul li.active');
         var nextPage = currentActivePage.next();
-        if (nextPage.attr('id') != 'Next') {
+        if (nextPage.attr('id') !== 'Next') {
           currentActivePage.removeClass('active');
           nextPage.addClass('active');
-          console.log(subCategoryId);
           removeElementsFromIndex();
           sockjs.send(subCategoryId, pageNumber());
         }
@@ -98,7 +101,7 @@ block head
       $('.pagination li#Prev').click(function(event) {
         var currentActivePage = $('.pagination ul li.active');
         var prevPage = currentActivePage.prev();
-        if (prevPage.attr('id') != 'Prev') {
+        if (prevPage.attr('id') !== 'Prev') {
           currentActivePage.removeClass('active');
           prevPage.addClass('active');
           removeElementsFromIndex();
@@ -108,13 +111,14 @@ block head
 
 
       $('.pagination li').click(function(event) {
-        var currentPage = $(this).children('a').text();
-        if (currentPage != "Prev" && currentPage != "Next") {
+        var currentPage = $(this).attr('id');
+        if (currentPage !== "Prev" && currentPage !== "Next") {
           $('.pagination li.active').removeClass('active');
           $(this).addClass('active');
+          removeElementsFromIndex();
+          sockjs.send(subCategoryId, pageNumber());
         }
       });
-
 
 
       pageNumber();
@@ -147,9 +151,9 @@ block body
           ul
             li(id='Prev')
               a(href='#') Prev
-            li.active(id='pageid_1')
+            li.active(id='pageId_1')
               a(href='#') 1
-            li(id='pageid_2')
+            li(id='pageId_2')
               a(href='#') 2
             li(id='Next')
               a(href='#' ) Next
