@@ -4,11 +4,5 @@ block head
 block body
     .page-header
       h1(align="center") Bodega #{network} Addon Store
-    if success === true
-      .alert.alert-success.success
-        | #{message}
-      script
-        window.location = '/index';
-    else
       .alert.alert-error.error
         | #{message}
