@@ -30,6 +30,7 @@ block head
 
       $('.dropdown-toggle').click(function(event) {
         removeElementsFromIndex();
+        resetPageNumber();
         var categoryId = $(this).attr('id');
         subCategoryId = categoryId;
         categoryPage = pageNumber();
@@ -39,6 +40,7 @@ block head
 
       $('.dropdown-menu > li a').click(function(event) {
         removeElementsFromIndex();
+        resetPageNumber();
         subCategoryId = $(this).attr('id');
         subCategoryPage = pageNumber();
         var data = subCategoryId + '/' + subCategoryPage;
@@ -125,7 +127,14 @@ block head
         }
       });
 
-
+      function resetPageNumber() {
+        //when we change our current channel we must reset the page
+        //number to the first page. Otherwise the sockjs will
+        //load the that specific page for our asset
+        var currentActivePage = $('.pagination ul li.active');
+        currentActivePage.removeClass('active');
+        $('.pagination ul li#pageId_1').addClass('active');
+      }
       pageNumber();
 
     });
