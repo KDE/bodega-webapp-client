@@ -59,7 +59,7 @@ block head
           var thumbnailAsset= thumbnailContent.children('.thumbnail');
           thumbnailAsset.attr('href', '#modalId_' + id);
           thumbnailAsset.children('p').text(name);
-
+          thumbnailAsset.children('img').attr('src', image);
           var modalContent = thumbnailContent.children('.modal.hide.fade');
           modalContent.attr('id', 'modalId_' + id);
 
@@ -75,6 +75,7 @@ block head
 
           var thumbnailAsset = thumbnailContent.children('.thumbnail');
           thumbnailAsset.children('p').text(name);
+          thumbnailAsset.children('img').attr('src', image);
           thumbnailAsset.attr('href', '#modalId_' + id);
 
           var modalContent = thumbnailContent.children('.modal.hide.fade');
@@ -173,19 +174,23 @@ block body
         ul.nav.nav-tabs.nav-pills.nav-stacked
           for category in categories
             li.dropdown
-              a.dropdown-toggle(data-toggle='dropdown', href='#', id='#{category.id}') #{category.name}
+              a.dropdown-toggle(data-toggle='dropdown', href='#', id='#{category.id}')
+                img(src='#{category.image}')
+                | #{category.name}
                 if (category.subcategories.length > 0)
-                  b.caret
                   ul.dropdown-menu
                     for subCategory in category.subcategories
                       li
-                        a(href="#", id='#{subCategory.id}') #{subCategory.name}
+                        a(href="#", id='#{subCategory.id}')
+                          img(src='#{subCategory.image}')
+                          | #{subCategory.name}
       .span10
         .row-fluid.show-grid(id='separator-thumbnail')
             ul.thumbnails
               li.span4(id='thumbnail-template')
                 .thumbnail(data-toggle='modal')
                   p Name
+                  img
                 .modal.hide.fade(id='modalId_', tabindex=-1, role='dialog')
                   .modal-header
                     h3 header
