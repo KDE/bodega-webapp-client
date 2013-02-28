@@ -17,7 +17,7 @@ block head
         templateStatus(true);
         var i = 0;
         $.each(result, function(key, value) {
-          populateTemplate(value.id, value.name, value.author, value.version, value.license, i%3);
+          populateTemplate(value.id, value.name, value.author, value.version, value.license,value.image, i%3);
           i = i + 1;
         });
 
@@ -47,7 +47,7 @@ block head
         sockjs.send(data);
       });
 
-      function populateTemplate(id, name, author, version, license, separator) {
+      function populateTemplate(id, name, author, version, license, image, separator) {
         if (separator === 0) {
           var separatorContent = $('.row-fluid.show-grid#separator-thumbnail').clone().insertBefore($('.pagination.pagination-centered')).end();
           //in order to clone our template we need to remove its id everytime
@@ -64,6 +64,7 @@ block head
           modalContent.attr('id', 'modalId_' + id);
 
           var modalBody = modalContent.children('.modal-body');
+          modalBody.children('#modalImageId_').attr('src', image);
           modalBody.children('#modalNameId_').text(name);
           modalBody.children('#modalAuthorId_').text('Author: ' + author);
           modalBody.children('#modalVersionId_').text('Version: ' + version);
@@ -80,6 +81,7 @@ block head
           modalContent.attr('id', 'modalId_' + id);
 
           var modalBody = modalContent.children('.modal-body');
+          modalBody.children('#modalImageId_').attr('src', image);
           modalBody.children('#modalNameId_').text(name);
           modalBody.children('#modalAuthorId_').text('Author: ' + author);
           modalBody.children('#modalVersionId_').text('Version: ' + version);
@@ -188,7 +190,7 @@ block body
                   .modal-header
                     h3 header
                   .modal-body
-                    h3(id='modalImageId_') Image Here
+                    img(id='modalImageId_') Image Here
                     h2(id='modalNameId_')Name
                     p Free TODO CHANGE THAT WITH REAL DATA
                     p
