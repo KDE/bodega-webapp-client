@@ -41,6 +41,8 @@ block head
       $('.dropdown-menu > li a').click(function(event) {
         removeElementsFromIndex();
         resetPageNumber();
+        var assetPages = $(this).attr('assetcount');
+        createPageElements(parseInt(assetPages));
         subCategoryId = $(this).attr('id');
         subCategoryPage = pageNumber();
         var data = subCategoryId + '/' + subCategoryPage;
@@ -113,8 +115,12 @@ block head
 
       function pageNumber() {
         var pageId = $('.pagination.pagination-centered li.active').attr('id');
-        var id = pageId.replace('pageId_', '');
-        console.log("pageId " + id);
+        if (pageId) {
+          var id = pageId.replace('pageId_', '');
+          console.log("pageId " + id);
+        } else {
+          return 1;
+        }
         return parseInt(id);
       }
 
@@ -164,6 +170,27 @@ block head
       }
       pageNumber();
 
+      function createPageElements(count) {
+        removePageElements();
+        for (var i = 1; i<= count; i++) {
+          var pageContent = $('.pagination.pagination-centered li#Prev').clone();
+          pageContent.children('a').text(i);
+          pageContent.attr('id', 'pageId_' + i);
+          pageContent.insertAfter($('.pagination.pagination-centered ul li:eq(-2)')).end();
+        }
+      }
+
+      function removePageElements() {
+        var elements = $('.pagination.pagination-centered ul li');
+        elements.each(function () {
+          var pageId = $(this).attr('id');
+          console.log($(this))
+          if (pageId !== "Prev" && pageId !== "Next") {
+            $(this).remove();
+          }
+        })
+      }
+
     });
 block body
   .title
@@ -174,14 +201,14 @@ block body
         ul.nav.nav-tabs.nav-pills.nav-stacked
           for category in categories
             li.dropdown
-              a.dropdown-toggle(data-toggle='dropdown', href='#', id='#{category.id}')
+              a.dropdown-toggle(data-toggle='dropdown', href='#', id='#{category.id}', assetcount='#{category.pages}')
                 img(src='#{category.image}')
                 | #{category.name}
                 if (category.subcategories.length > 0)
                   ul.dropdown-menu
                     for subCategory in category.subcategories
                       li
-                        a(href="#", id='#{subCategory.id}')
+                        a(href="#", id='#{subCategory.id}', assetcount='#{subCategory.pages}')
                           img(src='#{subCategory.image}')
                           | #{subCategory.name}
       .span10
@@ -207,9 +234,7 @@ block body
           ul
             li(id='Prev')
               a(href='#') Prev
-            li.active(id='pageId_1')
-              a(href='#') 1
-            li(id='pageId_2')
-              a(href='#') 2
+              //li.active(id='pageId_1')
+              //a(href='#') 1
             li(id='Next')
-              a(href='#' ) Next
+              a(href='#') Next
