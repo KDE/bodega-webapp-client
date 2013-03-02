@@ -148,7 +148,6 @@ block head
         }
       });
 
-
       $('.pagination.pagination-centered li').click(function(event) {
         var currentPage = $(this).attr('id');
         if (currentPage !== "Prev" && currentPage !== "Next") {
@@ -168,14 +167,18 @@ block head
         currentActivePage.removeClass('active');
         $('.pagination.pagination-centered ul li#pageId_1').addClass('active');
       }
-      pageNumber();
 
       function createPageElements(count) {
         removePageElements();
         for (var i = 1; i<= count; i++) {
-          var pageContent = $('.pagination.pagination-centered li#Prev').clone();
+          var pageContent = $('.pagination.pagination-centered li#pageId_1').clone(true);
           pageContent.children('a').text(i);
           pageContent.attr('id', 'pageId_' + i);
+          pageContent.removeClass('active');
+          if (i ==1) {
+            pageContent.addClass('active');
+            continue;
+          }
           pageContent.insertAfter($('.pagination.pagination-centered ul li:eq(-2)')).end();
         }
       }
@@ -185,7 +188,7 @@ block head
         elements.each(function () {
           var pageId = $(this).attr('id');
           console.log($(this))
-          if (pageId !== "Prev" && pageId !== "Next") {
+          if (pageId !== "Prev" && pageId !== "Next" && pageId !== 'pageId_1') {
             $(this).remove();
           }
         })
@@ -234,7 +237,7 @@ block body
           ul
             li(id='Prev')
               a(href='#') Prev
-              //li.active(id='pageId_1')
-              //a(href='#') 1
+            li.active(id='pageId_1')
+              a(href='#') 1
             li(id='Next')
               a(href='#') Next
