@@ -31,6 +31,8 @@ block head
       $('.dropdown-toggle').click(function(event) {
         removeElementsFromIndex();
         resetPageNumber();
+        var assetPages = $(this).attr('assetcount');
+        createPageElements(parseInt(assetPages));
         var categoryId = $(this).attr('id');
         subCategoryId = categoryId;
         categoryPage = pageNumber();
