@@ -9,6 +9,10 @@ block head
       var subCategoryId;
       sockjs.onopen = function() {
         console.log('[*] open', sockjs.protocol);
+        //when the user open the index we have to give him a default category with assets
+        //so let's give to him the wallpapers
+        $('.dropdown-toggle#23').click();
+
       }
 
       sockjs.onmessage = function(e) {
