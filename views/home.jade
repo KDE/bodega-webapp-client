@@ -1,0 +1,16 @@
+extends layout
+block head
+  title Welcome to #{network} Network
+block body
+  .title
+    h1(align="center") Login with your #{network} Account
+    .row
+      .span9
+      .span6
+        .hero-unit(align='center')
+          p
+            a.btn.btn-primary(href='login') I already have an account
+          p
+            a.btn.btn-primary(href='/register') Create a new account for me
+          p
+            a(href='account/resetPassword') Forgot your password?

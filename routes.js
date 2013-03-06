@@ -9,8 +9,11 @@ function isAuthorized(req, res, next)
 }
 
 app.get('/', function(req, res) {
+    res.render('home', {
+        network: app.config.network
+    });
     //res.render('index');
-    res.redirect('/login');
+    //res.redirect('/login');
 });
 
 app.get('/index', isAuthorized, function(req, res) {
