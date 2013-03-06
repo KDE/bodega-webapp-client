@@ -27,20 +27,22 @@ block body
             return false;
         }
       }
-
-    form.well(method='POST', id='login', onsubmit='return validateForm();')
-      fieldset.control-group(id='field-control')
-        span.help-block(id='help-password')
-        span.help-block(id='help-email')
-        .input
-          input.xlarge(type='text', placeholder='Enter your Firstname', name='firstname', required)
-        .input
-          input.xlarge(type='text', placeholder='Enter your Lastname', name='lastname', required)
-        .input
-          input.xlarge(type='text', placeholder='Enter your Email Adress', name='email', id='email', required)
-        .input
-          input.xlarge(type='password', placeholder='Enter your Password', name='password1', id='password1' , required)
-        .input
-          input.xlarge(type='password', placeholder='Retype your Password', name='password2', id='password2' , required)
-        .action
-          input.btn-primary(type='submit',id='loginButton', value='Create My New Account!')
+    .row
+      .span9
+      .span6
+        form.well(method='POST', id='login', align='center', onsubmit='return validateForm();')
+          fieldset.control-group(id='field-control')
+            span.help-block(id='help-password')
+            span.help-block(id='help-email')
+            .input
+              input.xlarge(type='text', placeholder='Enter your Firstname', name='firstname', required)
+            .input
+              input.xlarge(type='text', placeholder='Enter your Lastname', name='lastname', required)
+            .input
+              input.xlarge(type='text', placeholder='Enter your Email Adress', name='email', id='email', required)
+            .input
+              input.xlarge(type='password', placeholder='Enter your Password', name='password1', id='password1' , required)
+            .input
+              input.xlarge(type='password', placeholder='Retype your Password', name='password2', id='password2' , required)
+            .action
+              input.btn-primary(type='submit',id='loginButton', value='Create My New Account!')
