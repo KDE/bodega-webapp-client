@@ -206,6 +206,9 @@ block body
     h1(align='center') Welcome to the #{network} Web Store
   .container-fluid
     .row-fluid
+      .span12
+        include navigator
+    .row-fluid
       .span2
         ul.nav.nav-tabs.nav-pills.nav-stacked
           for category in categories
