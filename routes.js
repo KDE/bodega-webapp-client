@@ -66,7 +66,7 @@ app.get('/login', function(req, res) {
     });
 });
 
-app.get('/login/info', function(req, res) {
+app.get('/login/info',isAuthorized,  function(req, res) {
     app.BodegaManager.loginInfo(req, res);
 });
 
@@ -106,7 +106,7 @@ app.get('/account/modify',isAuthorized, function(req, res) {
     });
 });
 
-app.post('/account/modify', function(req, res) {
+app.post('/account/modify', isAuthorized, function(req, res) {
     app.BodegaManager.accountmodify(req, res);
 });
 
@@ -117,7 +117,7 @@ app.get('/account/modify/confirm',isAuthorized, function(req, res) {
     });
 });
 
-app.get('/account', function(req, res) {
+app.get('/account', isAuthorized, function(req, res) {
     res.redirect('/account/modify');
     //res.render('account');
 });
