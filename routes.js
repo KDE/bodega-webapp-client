@@ -110,7 +110,7 @@ app.post('/account/modify', isAuthorized, function(req, res) {
     app.BodegaManager.accountmodify(req, res);
 });
 
-app.get('/account/modify/confirm',isAuthorized, function(req, res) {
+app.get('/account/modify/confirm', isAuthorized, function(req, res) {
      res.render('accountmodifyconfirm', {
          result: app.operationStatus,
          network: app.config.network
