@@ -76,12 +76,6 @@ app.configure('production', function() {
 //app.server must be initialized before BodegaManager!!
 app.server = http.createServer(app);
 
-//make our EventHandler global
-var e = require('./lib/event.js').EventHandler;
-var EventHandler = new e();
-app.EventHandler = EventHandler;
-
-
 var bodega = require('./lib/bodega.js').BodegaManager;
 var BodegaManager = new bodega();
 app.BodegaManager = BodegaManager;
