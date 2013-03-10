@@ -152,6 +152,13 @@ app.get('/account/resetPassword/confirm', function(req, res){
     });
 });
 
+
+app.get('/account/points', function(req, res) {
+    res.render('pointsbuy', {
+        network: app.config.network
+    });
+});
+
 app.get('/logout', function(req, res) {
     req.session.destroy();
     delete app.cookie;
