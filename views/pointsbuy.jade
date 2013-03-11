@@ -4,11 +4,22 @@ block head
 block body
   .title
     h1(align="center") Buy your own #{network} Points
+    script
+      function validateForm() {
+        if ($('#reedemCode').val() == '' && $('#points500').val() == '' && $('#points1000').val() == '' && $('#points5000').val() == '' &&
+          $('#points1000').val() == '' && $('#otherValue').val() == '') {
+            $('#field-control').addClass('error');
+            console.log("mesa stin if");
+            $('#help-field').text('In order to purcase more points, you need to select a method');
+            return false;
+          }
+      }
     .row
       .span9
       .span6
         form.well.form-horizontal(method='POST', id='login', align='center', onsubmit='return validateForm();')
           fieldset.control-group(id='field-control')
+            span.help-block(id='help-field')
             .control-group
               .input
                 label.control-label(for='reedemCode')|  Reedem Code:
@@ -23,19 +34,19 @@ block body
                 .controls
                   .input
                     label.radio(for='points500')
-                      input(type='radio', name='optionsRadio', id='points500', value='option1')
+                      input(type='radio', name='optionsRadio', id='points500', name='points500', value='500')
                       label.pull-left 500 Points
-                    label.radio(for='points500')
-                      input(type='radio', name='optionsRadio', id='points500', value='option1')
+                    label.radio(for='points1000')
+                      input(type='radio', name='optionsRadio', id='points1000', name='points1000', value='1000')
                       label.pull-left 1000 Points
-                    label.radio(for='points500')
-                      input(type='radio', name='optionsRadio', id='points500', value='option1')
+                    label.radio(for='points5000')
+                      input(type='radio', name='optionsRadio', id='points5000', name='points5000', value='5000')
                       label.pull-left 5000 Points
-                    label.radio(for='points500')
-                      input(type='radio', name='optionsRadio', id='points500', value='option1')
+                    label.radio(for='points1000')
+                      input(type='radio', name='optionsRadio', id='points10000', name='points10000', value='10000')
                       label.pull-left 10000 Points
-                     label.radio(for='points500')
-                      input(type='radio', name='optionsRadio', id='points500', value='option1')
+                     label.radio(for='overValue')
+                      input(type='radio', name='optionsRadio', id='overValue', name='overValue', value='otherValue')
                       label.pull-left Other:
                       input.input-small(type='text', name='otherValueForPoints')
             .control-group

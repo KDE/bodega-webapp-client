@@ -159,6 +159,10 @@ app.get('/account/points', function(req, res) {
     });
 });
 
+app.post('/account/points', function(req, res) {
+    app.BodegaManager.pointsBuy(req, res);
+});
+
 app.get('/logout', function(req, res) {
     req.session.destroy();
     delete app.cookie;
