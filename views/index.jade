@@ -206,11 +206,10 @@ block body
     h1(align='center') Welcome to the #{network} Web Store
   .container-fluid
     .row-fluid
-      .span12
         include navigator
     .row-fluid
       .span2
-        ul.nav.nav-tabs.nav-pills.nav-stacked.affix
+        ul.nav.nav-tabs.nav-pills.nav-stacked.span2.affix
           for category in categories
             li.dropdown
               a.dropdown-toggle(data-toggle='dropdown', href='#', id='#{category.id}', assetcount='#{category.pages}')
