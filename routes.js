@@ -38,45 +38,6 @@ app.get('/index', isAuthorized, function(req, res) {
     app.BodegaManager.index(req, res);
 });
 
-app.get('/index/test', function(req, res) {
-    var categories = [];
-    var book = [];
-    var wallpaper = [];
-
-    for (var i = 0; i < 6; i++ ) {
-        categories[i] = {
-            name: 'category ' + i
-        };
-        book[i] = {
-            name: 'book ' + i,
-            author: 'author' + i,
-            description: 'description ' + i,
-            license: 'license ' + i,
-            image: app.config.bodega + ":" + app.config.port + '/images/128/default/book.png'
-        };
-        wallpaper[i] = {
-            name: 'wallpaper ' + i,
-            image: app.config.bodega + ':' + app.config.port + '/images/128/default/wallpaper.png'
-        };
-    }
-
-    var channels = [];
-    channels[0] = {
-        name: 'books',
-        cat: categories,
-        assets: book
-    };
-    channels[1] = {
-        name: 'wallpapaers',
-        assets: wallpaper
-    };
-
-    res.render('indextest', {
-        network: app.config.network,
-        channel: channels
-    });
-});
-
 //login
 app.get('/login', function(req, res) {
     res.render('login', {
@@ -141,7 +102,7 @@ app.get('/account/resetPassword', function(req, res){
 });
 
 app.post('/account/resetPassword', function(req, res){
-    app.BodegaManager.resetpassword(req,res);
+    app.BodegaManager.resetpassword(req, res);
 });
 
 app.get('/account/resetPassword/confirm', function(req, res){
@@ -152,14 +113,13 @@ app.get('/account/resetPassword/confirm', function(req, res){
     });
 });
 
-
-app.get('/account/points', function(req, res) {
+app.get('/account/points', isAuthorized, function(req, res) {
     res.render('pointsbuy', {
         network: app.config.network
     });
 });
 
-app.post('/account/points', function(req, res) {
+app.post('/account/points', isAuthorized, function(req, res) {
     app.BodegaManager.pointsBuy(req, res);
 });
 
