@@ -27,9 +27,8 @@ block body
             return false;
         }
       }
-    .row
-      .span9
-      .span6
+    .container
+      .span6.offset3
         form.well(method='POST', id='login', align='center', onsubmit='return validateForm();')
           fieldset.control-group(id='field-control')
             span.help-block(id='help-password')
