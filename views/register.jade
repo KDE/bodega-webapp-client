@@ -1,7 +1,7 @@
 extends layout
 block head
   title Create your own #{network} Account
-  include ../node_modules/validator/validator.js
+  script(src='https://raw.github.com/chriso/node-validator/master/validator-min.js');
 block body
   .title
     h1(align="center") Create your own #{network} Account
@@ -23,7 +23,8 @@ block body
             return false;
         }
 
-        try (check(#email).isEmail()) {
+        try {
+          check($('#email').val()).isEmail();
         } catch (e) {
             $('#email').attr('placeholder', 'Your email address is not valid.');
             $('#field-control').addClass('error');
