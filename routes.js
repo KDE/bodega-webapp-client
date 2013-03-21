@@ -70,7 +70,9 @@ app.post('/register', function(req, res) {
 
 app.get('/register/confirm', function(req, res) {
     res.render('registerconfirm', {
-        network: app.config.network
+        network: app.config.network,
+        success: app.operationStatus,
+        message: app.operationMessage
     });
 });
 
