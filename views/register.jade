@@ -15,6 +15,14 @@ block body
             return false;
         }
 
+        if ($('#email').val() !== $('#email2').val()) {
+            $('#email').attr('placeholder', 'Your email addresses does not match.');
+            $('#email2').attr('placeholder', 'Your email addresses does not match.');
+            $('#field-control').addClass('error');
+            $('#help-password').text('Your email addresses does not match');
+            return false;
+        }
+
         if ($('#password').val().length < 8 || $('#password2').val() < 8 ) {
             $('#password').attr('placeholder', 'Your password must be at least 8 digits.');
             $('#password2').attr('placeholder', 'Your password must be at least 8 digits.');
@@ -44,6 +52,8 @@ block body
               input.xlarge(type='text', placeholder='Enter your Lastname', name='lastname', required)
             .input
               input.xlarge(type='text', placeholder='Enter your Email Adress', name='email', id='email', required)
+            .input
+              input.xlarge(type='text', placeholder='Enter your Email Adress Again', name='email2', id='email2', required)
             .input
               input.xlarge(type='password', placeholder='Enter your Password', name='password', id='password' , required)
             .input
