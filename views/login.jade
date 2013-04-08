@@ -4,11 +4,13 @@ block head
 block body
   .title
     h1(align="center") Login with your #{network} Account
-    form.well(method='POST', id='login', onsubmit='return validateForm();')
-      fieldset.control-group(id='field-control')
-        .input
-          input.xlarge(type='text', placeholder='Enter your Username', name='username', required)
-        .input
-          input.xlarge(type='password', placeholder='Enter your Password', name='password', required)
-        .action
-          input.btn-primary(type='submit',id='loginButton', value='Connect!')
+    .container
+      .span6.offset3
+        form.well(method='POST', id='login', onsubmit='return validateForm();')
+          fieldset.control-group(id='field-control', align='center')
+            .input
+              input.xlarge(type='text', placeholder='Enter your Username', name='username', required)
+            .input
+              input.xlarge(type='password', placeholder='Enter your Password', name='password', required)
+            .action
+              input.btn-primary(type='submit',id='loginButton', value='Connect!')
