@@ -1,56 +1,84 @@
 extends layout
 block head
   title Buy your own #{network} Points
+  script(src='https://raw.github.com/chriso/node-validator/master/validator-min.js');
 block body
   .title
     h1(align="center") Your Payment Method for  #{network}
+    script
+      function validateForm() {
+        if (!$('#inputVisa').prop('checked') && !$('#inputMastercard').prop('checked') && !$('#inputAmericanExpress').prop('checked') && !$('#inputDinnersClub').prop('checked')) {
+          $('#field-control').addClass('error');
+          $('#help-field').text('You must select your card type');
+          return false;
+        }
+
+        try {
+          check($('#inputNumber').val()).len(14,16).isInt();
+        } catch (e){
+          $('#field-control').addClass('error');
+          $('#help-field').text('Your credit card number is not valid');
+          return false;
+        }
+        try {
+          check($('#inputCvc').val()).len(3,4).isInt();
+        } catch (e) {
+          $('#field-control').addClass('error');
+          $('#help-field').text('Your cvc number is not valid');
+          return false;
+        }
+      }
     include navigator
     .container
     .span5.offset4
       form.well.form-horizontal(method='POST', id='login', onsubmit='return validateForm();')
-        .control-group
-          label.control-label(for="inputVisa")
-            | Card Type:
-          .controls
-            label.radio
-              input(type='radio', name='card', id="inputVisa")
-              | Visa
-          .controls
-            label.radio
-              input(type='radio', name='card', id="inputMastercard")
-              | Master Card
-          .controls
-            label.radio
-              input(type='radio', name='card', id="inputAmericanExpress")
-              | American Express
-          .controls
-            label.radio
-              input(type='radio', name='card', id="inputDiscount")
-              | Diners Club
-        .control-group
-          label.control-label(for="inputName")
-            | Name on card:
-          .controls
-            input(type='text', id='inputName', placeholder='password')
-        .control-group
-          label.control-label(for="inputNumber")
-            | Number:
-          .controls
-            input(type='text', id='inputNumber', placeholder='password')
-        .control-group
-          label.control-label(for="inputCvc")
-            | Cvc
-          .controls
-            input(type='text', id='inputCvc', placeholder='password')
-        .control-group
-          label.control-label(for="inputExpires")
-            | Expires
-          .controls
-            input(type='text', id='inputExpires', placeholder='password')
-        .control-group
-          .controls
-            .action
-              input.btn.btn-primary(type='submit', value='Add Your Credit Card')
+        fieldset.control-group(id='field-control')
+          span.help-block(id='help-field')
+          .control-group
+            label.control-label(for="inputVisa")
+              | Card Type:
+            .controls
+              label.radio
+                input(type='radio', name='card', id="inputVisa")
+                | Visa
+            .controls
+              label.radio
+                input(type='radio', name='card', id="inputMastercard")
+                | Master Card
+            .controls
+              label.radio
+                input(type='radio', name='card', id="inputAmericanExpress")
+                | American Express
+            .controls
+              label.radio
+                input(type='radio', name='card', id="inputDinnersClub")
+                | Diners Club
+          .control-group
+            label.control-label(for="inputName")
+              | Name on card:
+            .controls
+              input(type='text', id='inputName', name='inputName', placeholder='Please type your full name')
+          .control-group
+            label.control-label(for="inputNumber")
+              | Number:
+            .controls
+              .input
+                input.input(type='text', id='inputNumber', name='inputNumber', placeholder='Please type your credit card number')
+          .control-group
+            label.control-label(for="inputCvc")
+              | Cvc
+            .controls
+              input(type='text', id='inputCvc', name='inputCvc', placeholder='Please type your cvc')
+          .control-group
+            label.control-label(for="inputExpires")
+              | Expires
+            .controls
+              input.input-mini.span1(type='text', id='inputMonthExpires', name='inputMonthExpires', placeholder='Please enter the expire date of your card')
+              input.input-mini.span1(type='text', id='inputYearExpires', name='inputYearExpires', placeholder='Please enter the expire date of your card')
+          .control-group
+            .controls
+              .action
+                input.btn.btn-primary(type='submit', value='Add Your Credit Card')
 
 
 
