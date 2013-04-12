@@ -1,0 +1,56 @@
+extends layout
+block head
+  title Buy your own #{network} Points
+block body
+  .title
+    h1(align="center") Your Payment Method for  #{network}
+    include navigator
+    .container
+    .span5.offset4
+      form.well.form-horizontal(method='POST', id='login', onsubmit='return validateForm();')
+        .control-group
+          label.control-label(for="inputVisa")
+            | Card Type:
+          .controls
+            label.radio
+              input(type='radio', name='card', id="inputVisa")
+              | Visa
+          .controls
+            label.radio
+              input(type='radio', name='card', id="inputMastercard")
+              | Master Card
+          .controls
+            label.radio
+              input(type='radio', name='card', id="inputAmericanExpress")
+              | American Express
+          .controls
+            label.radio
+              input(type='radio', name='card', id="inputDiscount")
+              | Diners Club
+        .control-group
+          label.control-label(for="inputName")
+            | Name on card:
+          .controls
+            input(type='text', id='inputName', placeholder='password')
+        .control-group
+          label.control-label(for="inputNumber")
+            | Number:
+          .controls
+            input(type='text', id='inputNumber', placeholder='password')
+        .control-group
+          label.control-label(for="inputCvc")
+            | Cvc
+          .controls
+            input(type='text', id='inputCvc', placeholder='password')
+        .control-group
+          label.control-label(for="inputExpires")
+            | Expires
+          .controls
+            input(type='text', id='inputExpires', placeholder='password')
+        .control-group
+          .controls
+            .action
+              input.btn.btn-primary(type='submit', value='Add Your Credit Card')
+
+
+

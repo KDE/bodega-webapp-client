@@ -125,6 +125,10 @@ app.post('/account/points', isAuthorized, function(req, res) {
     app.BodegaManager.pointsBuy(req, res);
 });
 
+app.get('/account/paymentMethod', isAuthorized, function(req, res) {
+    app.BodegaManager.paymentMethod(req, res);
+});
+
 app.get('/logout', function(req, res) {
     req.session.destroy();
     delete app.cookie;

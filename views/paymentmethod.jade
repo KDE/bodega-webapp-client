@@ -1,0 +1,51 @@
+extends layout
+block head
+  title Buy your own #{network} Points
+block body
+  .title
+    h1(align="center") Your Payment Method for  #{network}
+    include navigator
+    if (success === true)
+      .container
+        .span6.offset3
+          form.well.form-horizontal(method='POST', id='login', align='center', onsubmit='return validateForm();')
+            fieldset.control-group(id='field-control')
+              .control-group
+                label.control-label(for='inputCardType') Card Type:
+                .controls
+                  label(type='text', id='inputCardType') #{cardType}
+              .control-group
+                label.control-label(for='inputName') Name:
+                .controls
+                  label(type='text', id='inputName') #{cardName}
+              .control-group
+                label.control-label(for='inputNumber') Number:
+                .controls
+                  label(type='text', id='inputNumber') xxxx xxxx xxxx #{cardNumber}
+              .control-group
+                label.control-label(for='inputBillingAddress') Billing Address:
+                .controls
+                  label(type='text', id='inputBillingAddress') #{cardBillingAddress}
+              .control-group
+                label.control-label(for='inputCountry') Country:
+                .controls
+                  label(type='text', id='inputCountry') #{cardCountry}
+              .control-group
+                label.control-label(for='inputState') State:
+                .controls
+                  label(type='text', id='inputState') #{cardState}
+              .control-group
+                label.control-label(for='inputZipCode') Zip:
+                .controls
+                  label(type='text', id='inputZipCode') #{cardZipCode}
+              .control-group.pull-left
+                .controls
+                  input.btn.btn-primary(type='submit', value='Remove')
+                  input.btn.btn-primary(type='submit', value='Update')
+    else
+      .alert.alert-error
+        | #{message}
+
+
+
+
