@@ -130,7 +130,7 @@ app.get('/account/paymentMethod', isAuthorized, function(req, res) {
 });
 
 app.get('/account/paymentMethod/create', isAuthorized, function(req, res) {
-    res.render('paymentmethodcreate',{
+    res.render('paymentmethodcreate', {
         network: app.config.network
     });
 });
@@ -140,11 +140,15 @@ app.post('/account/paymentMethod/create', isAuthorized, function(req, res) {
 });
 
 app.get('/account/paymentMethod/create/confirm', isAuthorized, function(req, res) {
-    res.render('paymentmethodcreateconfirm',{
+    res.render('paymentmethodcreateconfirm', {
         network: app.config.network,
         message: app.operationMessage,
         success: app.operationStatus
     });
+});
+
+app.get('/account/paymentMethod/delete', isAuthorized, function(req, res) {
+    app.BodegaManager.paymentMethodDelete(req, res);
 });
 
 app.get('/logout', function(req, res) {

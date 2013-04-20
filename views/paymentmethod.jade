@@ -1,6 +1,21 @@
 extends layout
 block head
-  title Buy your own #{network} Points
+  title Add your own #{network} Purchase Method
+  script(src="http://twitter.github.io/bootstrap/assets/js/bootstrap-popover.js")
+  script
+    $(document).ready(function(){
+      var popoverContentBody = $('.popoverContent');
+      var popoverMenu = $('input#deletePaymentMethod.btn');
+
+      popoverContentBody.hide();
+
+      popoverMenu.click(function(event) {
+        popoverContentBody.show();
+      });
+
+      popoverMenu.popover({content: popoverContentBody, html: true});
+    });
+
 block body
   .title
     h1(align="center") Your Payment Method for  #{network}
@@ -40,12 +55,14 @@ block body
                   label(type='text', id='inputZipCode') #{cardZipCode}
               .control-group.pull-left
                 .controls
-                  input.btn.btn-primary(type='submit', value='Remove')
-                  input.btn.btn-primary(type='submit', value='Update')
+                  input.btn.btn-primary(href='#',id='deletePaymentMethod',rel='popover', data-toggle='popover', data-placement='bottom',title='Delete payment method', value='Remove')
+                  input.btn.btn-primary(value='Update')
     else
       .alert.alert-error
         | #{message}
 
-
+    .popoverContent
+      h4.label-important.offset this action cannot be undone
+      a.btn.btn-primary.offset(type='button', href='/account/paymentMethod/delete') Delete my payment method
 
 

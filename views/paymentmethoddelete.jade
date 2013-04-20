@@ -1,0 +1,14 @@
+extend layout
+block head
+    title Add Payment Method Confirm
+block body
+    .page-header
+      h1(align="center") Bodega #{network} Addon Store
+      include navigator
+      if (success === true)
+        .alert.alert-success
+          | #{message}
+      else
+        .alert.alert-error
+          | #{message}
+
