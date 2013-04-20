@@ -33,16 +33,16 @@ app.get('/', function(req, res) {
     //res.render('index');
 });
 
+app.post('/', function(req, res){
+    app.BodegaManager.login(req, res);
+});
+
 app.get('/index', isAuthorized, function(req, res) {
     app.BodegaManager.index(req, res);
 });
 
 app.get('/login/info',isAuthorized,  function(req, res) {
     app.BodegaManager.loginInfo(req, res);
-});
-
-app.post('/login', function(req, res){
-    app.BodegaManager.login(req, res);
 });
 
 app.get('/login/confirm', function(req, res){
