@@ -27,22 +27,14 @@ function isAuthorized(req, res, next)
 }
 
 app.get('/', function(req, res) {
-    res.render('home', {
+    res.render('login', {
         network: app.config.network
     });
     //res.render('index');
-    //res.redirect('/login');
 });
 
 app.get('/index', isAuthorized, function(req, res) {
     app.BodegaManager.index(req, res);
-});
-
-//login
-app.get('/login', function(req, res) {
-    res.render('login', {
-        network: app.config.network
-    });
 });
 
 app.get('/login/info',isAuthorized,  function(req, res) {
