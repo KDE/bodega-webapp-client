@@ -143,6 +143,22 @@ app.get('/account/paymentMethod/delete', isAuthorized, function(req, res) {
     app.BodegaManager.paymentMethodDelete(req, res);
 });
 
+app.get('/account/paymentMethod/update', isAuthorized, function(req, res) {
+    app.BodegaManager.paymentMethodUpdateInfo(req, res);
+});
+
+app.post('/account/paymentMethod/update', isAuthorized, function(req, res) {
+    app.BodegaManager.paymentMethodUpdate(req, res);
+});
+
+app.get('/account/paymentMethod/update/confirm', isAuthorized, function(req, res) {
+    res.render('paymentmethodupdateconfirm', {
+        network: app.config.network,
+        message: app.operationMessage,
+        success: app.operationStatus
+    });
+});
+
 app.get('/logout', function(req, res) {
     req.session.destroy();
     delete app.cookie;

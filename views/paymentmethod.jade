@@ -56,7 +56,7 @@ block body
               .control-group.pull-left
                 .controls
                   input.btn.btn-primary(href='#',id='deletePaymentMethod',rel='popover', data-toggle='popover', data-placement='bottom',title='Delete payment method', value='Remove')
-                  input.btn.btn-primary(value='Update')
+                  input.btn.btn-primary(href='/account/paymentMethod/update', value='Update')
     else
       .alert.alert-error
         | #{message}

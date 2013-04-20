@@ -1,0 +1,49 @@
+extends layout
+block head
+  title Buy your own #{network} Points
+  script(src='https://raw.github.com/chriso/node-validator/master/validator-min.js');
+block body
+  .title
+    h1(align="center") Your Payment Method for  #{network}
+    script
+      function validateForm() {
+        try {
+          check($('#inputNumber').val()).len(14,16).isInt();
+        } catch (e){
+          $('#field-control').addClass('error');
+          $('#help-field').text('Your credit card number is not valid');
+          return false;
+        }
+      }
+    include navigator
+    .container
+    .span5.offset4
+      form.well.form-horizontal(method='POST', id='login', onsubmit='return validateForm();')
+        fieldset.control-group(id='field-control')
+          span.help-block(id='help-field')
+          .control-group
+            label.control-label(for="inputVisa")
+              | Card Type:
+            .controls
+              label.control-label(for='inputVisa') #{cardType}
+          .control-group
+            label.control-label(for="inputName")
+              | Name on card:
+            .controls
+              input(type='text', id='inputName', name='inputName', value='#{cardName}')
+          .control-group
+            label.control-label(for="inputNumber")
+              | Number:
+            .controls
+              .input
+                input.input(type='text', id='inputNumber', name='inputNumber', placeholder='For security reason you must type your credit card number again', required)
+          .control-group
+            label.control-label(for="inputExpires")
+              | Expires
+            .controls
+              input.input-mini.span1(type='text', id='inputMonthExpires', name='inputMonthExpires', value='#{cardMonthExpire}')
+              input.input-mini.span1(type='text', id='inputYearExpires', name='inputYearExpires', value='#{cardYearExpire}')
+          .control-group
+            .controls
+              .action
+                input.btn.btn-primary(type='submit', value='Update Your Credit Card')
