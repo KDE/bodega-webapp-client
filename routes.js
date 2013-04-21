@@ -159,6 +159,10 @@ app.get('/account/paymentMethod/update/confirm', isAuthorized, function(req, res
     });
 });
 
+app.get('/account/history', isAuthorized, function(req, res) {
+    app.BodegaManager.history(req, res);
+});
+
 app.get('/logout', function(req, res) {
     req.session.destroy();
     delete app.cookie;

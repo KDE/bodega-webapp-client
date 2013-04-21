@@ -1,0 +1,34 @@
+extends layout
+block head
+  title Add your own #{network} Purchase Method
+  script
+    $(document).ready(function() {
+      var historyDivider= $('li.divider');
+      var historyDateElements = historyDivider.prev().children('a');
+
+      historyDateElements.each(function(index) {
+
+        var fullDate= $(this).text();
+        var localeDate = new Date(fullDate).toLocaleDateString();
+        var localeTime = new Date(fullDate).toLocaleTimeString();
+
+        $(this).text(localeDate + ' ' + localeTime);
+      });
+    });
+block body
+  .title
+    h1(align="center") Your Payment Method for  #{network}
+    include navigator
+    .container
+        .span6.offset3
+          .well
+            ul.nav.nav-list
+              li.nav-header(id='historyHeader') Account History
+                for historyData in data.history
+                  li
+                    a(href='#') Added #{historyData.what} #{historyData.category}
+                  li
+                    a(href='#') #{historyData.comment}
+                  li
+                    a(href='#') #{historyData.date}
+                  li.divider
