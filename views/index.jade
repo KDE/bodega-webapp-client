@@ -41,11 +41,11 @@ block head
         var categoryId = $(this).attr('id');
         subCategoryId = categoryId;
         categoryPage = pageNumber();
+        isCollection = $(this).attr('isCollection');
         communicateWithTheServerSideSockJs(categoryId);
       });
 
       function communicateWithTheServerSideSockJs(categoryId) {
-        isCollection = $(this).attr('isCollection');
         var categoryPage = pageNumber();
         var data = '';
         if (isCollection) {
@@ -63,6 +63,7 @@ block head
         createPageElements(parseInt(assetPages));
         subCategoryId = $(this).attr('id');
         subCategoryPage = pageNumber();
+        isCollection = $(this).attr('isCollection');
         communicateWithTheServerSideSockJs(subCategoryId);
       });
 
