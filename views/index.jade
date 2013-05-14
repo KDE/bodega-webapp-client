@@ -7,6 +7,7 @@ block head
       var sockjs = new SockJS(sockjs_url);
       var categoryPage;
       var subCategoryId;
+      var isCollection;
       sockjs.onopen = function() {
         console.log('[*] open', sockjs.protocol);
         //when the user open the index we have to give him a default category with assets
@@ -40,9 +41,20 @@ block head
         var categoryId = $(this).attr('id');
         subCategoryId = categoryId;
         categoryPage = pageNumber();
-        var data = categoryId + '/' + categoryPage;
-        sockjs.send(data);
+        communicateWithTheServerSideSockJs(categoryId);
       });
+
+      function communicateWithTheServerSideSockJs(categoryId) {
+        isCollection = $(this).attr('isCollection');
+        var categoryPage = pageNumber();
+        var data = '';
+        if (isCollection) {
+          data = 'collection/' + categoryId + '/' + categoryPage;
+        } else {
+          data = 'channel/' + categoryId + '/' + categoryPage;
+        }
+         sockjs.send(data);
+      }
 
       $('.dropdown-menu > li a').click(function(event) {
         removeElementsFromIndex();
@@ -51,8 +63,7 @@ block head
         createPageElements(parseInt(assetPages));
         subCategoryId = $(this).attr('id');
         subCategoryPage = pageNumber();
-        var data = subCategoryId + '/' + subCategoryPage;
-        sockjs.send(data);
+        communicateWithTheServerSideSockJs(subCategoryId);
       });
 
       function populateTemplate(id, name, author, version, license, image, largeImage, separator) {
@@ -137,8 +148,7 @@ block head
           currentActivePage.removeClass('active');
           nextPage.addClass('active');
           removeElementsFromIndex();
-          var data = subCategoryId + '/' + pageNumber();
-          sockjs.send(data);
+          communicateWithTheServerSideSockJs(subCategoryId);
         }
       });
 
@@ -149,8 +159,7 @@ block head
           currentActivePage.removeClass('active');
           prevPage.addClass('active');
           removeElementsFromIndex();
-          var data = subCategoryId + '/' + pageNumber();
-          sockjs.send(data);
+          communicateWithTheServerSideSockJs(subCategoryId);
         }
       });
 
@@ -160,8 +169,7 @@ block head
           $('.pagination.pagination-centered li.active').removeClass('active');
           $(this).addClass('active');
           removeElementsFromIndex();
-          var data = subCategoryId + '/' + pageNumber();
-          sockjs.send(data);
+          communicateWithTheServerSideSockJs(subCategoryId);
         }
       });
 
@@ -181,7 +189,7 @@ block head
           pageContent.children('a').text(i);
           pageContent.attr('id', 'pageId_' + i);
           pageContent.removeClass('active');
-          if (i ==1) {
+          if (i == 1) {
             pageContent.addClass('active');
             continue;
           }
@@ -212,10 +220,10 @@ block body
         ul.nav.nav-tabs.nav-pills.nav-stacked.span2.affix
           for category in categories
             li.dropdown
-              a.dropdown-toggle(data-toggle='dropdown', href='#', id='#{category.id}', assetcount='#{category.pages}')
+              a.dropdown-toggle(data-toggle='dropdown', href='#', id='#{category.id}', assetcount='#{category.pages}', isCollection='#{category.isCollection}')
                 img(src='#{category.image}')
                 | #{category.name}
-                if (category.subcategories.length > 0)
+                if (category.subcategories && category.subcategories.length > 0)
                   ul.dropdown-menu
                     for subCategory in category.subcategories
                       li
