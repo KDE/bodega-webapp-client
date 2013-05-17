@@ -1,7 +1,17 @@
 {
-    "bodega": "78.47.60.181",
-    "domain": "addons.makeplaylive.com",
-    "port": 3000,
-    "api": "/bodega/v1/json/",
-    "network" : "MakePlayLive"
+    "server": {
+        "hostname": "addons.makeplaylive.com",
+        "port": 3000,
+        "api": "/bodega/v1/json/",
+        "network": "MakePlayLive",
+        "store": "VIVALDI-1"
+    },
+    "client": {
+        "port": 3001,
+        "hostname": "localhost",
+        "downloadTarget": "browser"
+    },
+    "redis" : {
+        "host" : "localhost"
+    }
 }
