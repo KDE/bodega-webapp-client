@@ -19,7 +19,10 @@ block body
   .title
     h1(align="center") Your Payment Method for  #{network}
     include navigator
-    .container
+    .container-fluid
+      .row-fluid
+        include account
+      .row-fluid
         .span6.offset3
           .well
             ul.nav.nav-list

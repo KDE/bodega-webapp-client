@@ -1,0 +1,27 @@
+extends layout
+block body
+    script
+      $(document).ready(function() {
+        //we are going to compare our url path
+        //with the id of each li element. when the
+        //url will be the same with the li id, then this li
+        //will become active
+        var pathName = window.location.pathname;
+        //jQuery doesn't like the '/' inside the selectors,
+        //so we are removing all the '/' from the url
+        var validPathName = pathName.replace(/\//g, '');
+
+        var activeElement = $('li#' + validPathName);
+        activeElement.addClass('active');
+      });
+
+    .span2
+      ul.nav.nav-tabs.nav-pills.nav-stacked.span2.affix
+        li(id='accountmodify')
+          a(href='/account/modify') Modify Your Account
+         li(id='accountpoints')
+          a(href='/account/points') Points
+        li(id='accounthistory')
+          a(href='/account/history') History
+        li(id='accountpaymentMethodcreate')
+          a(href='/account/paymentMethod/create') Add your payment method

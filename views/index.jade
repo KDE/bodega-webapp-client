@@ -1,6 +1,23 @@
 extends layout
 block head
   title Welcome to the #{network} Web Store
+  style
+    .accordion-inner
+    {
+      height: 400px;
+      overflow: auto;
+    }
+
+    .jspVerticalBar
+    {
+      width: 40px;
+    }
+    .jspDrag {
+      border-radius: 2px;
+    }
+    .jspTrack {
+      background: rgb(255, 255, 255); //white
+    }
   script
     $(document).ready(function() {
       var sockjs_url = '/indexTakeAssets';
@@ -32,7 +49,7 @@ block head
         console.log('[*] close');
       }
 
-      $('.dropdown-toggle').click(function(event) {
+      $('ul.nav.nav-tabs li a').click(function(event) {
         removeElementsFromIndex();
         resetPageNumber();
         var assetPages = $(this).attr('assetcount');
@@ -44,7 +61,7 @@ block head
         sockjs.send(data);
       });
 
-      $('.dropdown-menu > li a').click(function(event) {
+        /*$('.ul.nav.nav-tab li a').click(function(event) {
         removeElementsFromIndex();
         resetPageNumber();
         var assetPages = $(this).attr('assetcount');
@@ -53,7 +70,7 @@ block head
         subCategoryPage = pageNumber();
         var data = subCategoryId + '/' + subCategoryPage;
         sockjs.send(data);
-      });
+      });*/
 
       function populateTemplate(id, name, author, version, license, image, largeImage, separator) {
         if (separator === 0) {
@@ -200,7 +217,20 @@ block head
         })
       }
 
+      $(function() {
+        $('.accordion-inner').jScrollPane({
+          verticalDragMinHeight: 20,
+          verticalDragMaxHeight: 40,
+          horizontalDragMinWidth: 20,
+          horizontalDragMaxWidth: 40,
+          autoReinitialise: true
+        });
+
+      });
+
     });
+
+
 block body
   .title
     h1(align='center') Welcome to the #{network} Web Store
@@ -209,19 +239,31 @@ block body
         include navigator
     .row-fluid
       .span2
-        ul.nav.nav-tabs.nav-pills.nav-stacked.span2.affix
+        ul.nav.nav-tabs.nav-stacked.span2.affix
           for category in categories
-            li.dropdown
-              a.dropdown-toggle(data-toggle='dropdown', href='#', id='#{category.id}', assetcount='#{category.pages}')
-                img(src='#{category.image}')
-                | #{category.name}
-                if (category.subcategories.length > 0)
-                  ul.dropdown-menu
-                    for subCategory in category.subcategories
-                      li
-                        a(href="#", id='#{subCategory.id}', assetcount='#{subCategory.pages}')
-                          img(src='#{subCategory.image}')
-                          | #{subCategory.name}
+            if (category.subcategories.length > 0 )
+              .accordion(id='accordion#{category.id}')
+                .accordion-group
+                  .accordion-heading
+                    li
+                      a.accordion-toggle(href='#subCategory2', data-toggle='collapse', data-parent='#accordion#{category.id}', id='#{category.id}', assetcount='#{category.pages}')
+                        img(src='#{category.image}')
+                        | #{category.name}
+                  .accordion-body.collapse(id='subCategory#{category.id}')
+                    .accordion-inner
+                      for subCategory in category.subcategories
+                          li
+                            a(href='#', id='#{subCategory.id}', assetcount='#{subCategory.pages}')
+                              img(src='#{subCategory.image}')
+                              | #{subCategory.name}
+            else
+              li
+                a(href='#', id='#{category.id}', assetcount='#{category.pages}')
+                  img(src='#{category.image}')
+                  | #{category.name}
+
+
+
       .span10
         .row-fluid.show-grid(id='separator-thumbnail')
             ul.thumbnails

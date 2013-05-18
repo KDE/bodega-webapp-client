@@ -23,40 +23,43 @@ block body
         }
       }
     include navigator
-    .container
-      .span6.offset3
-        form.well.form-horizontal(method='POST', id='login', align='center', onsubmit='return validateForm();')
-          fieldset.control-group(id='field-control')
-            span.help-block(id='help-field')
-            .control-group
-              .input
-                label.control-label(for='reedemCode')|  Reedem Code:
-                .controls
-                  input.pull-left.input-small(type='text', name='reedemCode', id='reedemCode')
-            .control-group
-              input.btn-primary(type='submit', id='reedemButton', value='Reedem')
-            .control-group
-              .input
-                label.control-label Purchase Points
-            .controls-group
-                .controls
-                  .input
-                    label.radio(for='points500')
-                      input(type='radio', id='points500', name='points', value='500')
-                      label.pull-left 500 Points
-                    label.radio(for='points1000')
-                      input(type='radio', id='points1000', name='points', value='1000')
-                      label.pull-left 1000 Points
-                    label.radio(for='points5000')
-                      input(type='radio', id='points5000', name='points', value='5000')
-                      label.pull-left 5000 Points
-                    label.radio(for='points1000')
-                      input(type='radio', id='points10000', name='points', value='10000')
-                      label.pull-left 10000 Points
-                     label.radio(for='overValue')
-                      input(type='radio', id='overValue', name='500', value='otherValue')
-                      label.pull-left Other:
-                      input.input-small(type='text', name='points')
-            .control-group
-              .action
-                input.btn-primary(type='submit',id='buyPointsButton', value='Purchase')
+    .container-fluid
+      .row-fluid
+        include account
+      .row-fluid
+        .span6.offset3
+          form.well.form-horizontal(method='POST', id='login', align='center', onsubmit='return validateForm();')
+            fieldset.control-group(id='field-control')
+              span.help-block(id='help-field')
+              .control-group
+                .input
+                  label.control-label(for='reedemCode')|  Reedem Code:
+                  .controls
+                    input.pull-left.input-small(type='text', name='reedemCode', id='reedemCode')
+              .control-group
+                input.btn-primary(type='submit', id='reedemButton', value='Reedem')
+              .control-group
+                .input
+                  label.control-label Purchase Points
+              .controls-group
+                  .controls
+                    .input
+                      label.radio(for='points500')
+                        input(type='radio', id='points500', name='points', value='500')
+                        label.pull-left 500 Points
+                      label.radio(for='points1000')
+                        input(type='radio', id='points1000', name='points', value='1000')
+                        label.pull-left 1000 Points
+                      label.radio(for='points5000')
+                        input(type='radio', id='points5000', name='points', value='5000')
+                        label.pull-left 5000 Points
+                      label.radio(for='points1000')
+                        input(type='radio', id='points10000', name='points', value='10000')
+                        label.pull-left 10000 Points
+                      label.radio(for='overValue')
+                        input(type='radio', id='overValue', name='500', value='otherValue')
+                        label.pull-left Other:
+                        input.input-small(type='text', name='points')
+              .control-group
+                .action
+                  input.btn-primary(type='submit',id='buyPointsButton', value='Purchase')
