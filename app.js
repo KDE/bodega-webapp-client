@@ -22,14 +22,13 @@ var path = require('path');
 var fs = require('fs');
 var RedisStore = require('connect-redis')(express);
 var sockjs  = require('sockjs');
-var app = module.exports = express();
-
-GLOBAL.app = app;
+GLOBAL.app = module.exports = express();
 
 app.config = JSON.parse(fs.readFileSync(('./config.json'), 'utf8'));
 
 app.configure(function() {
-    app.set('port', process.env.PORT || 3300);
+    app.set('port', app.config.client.port);
+    app.set('hostname', app.config.client.hostname);
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
     app.use(express.favicon());
@@ -41,7 +40,7 @@ app.configure(function() {
 
     app.use(express.cookieParser());
     app.use(express.session({ secret: "love cookies",
-                              store: new RedisStore() }));
+                              store: new RedisStore(app.config.redis) }));
 
     app.use(app.router);
     app.use(function(req, res, next) {
@@ -81,6 +80,6 @@ app.BodegaManager = BodegaManager;
 
 require("./routes.js");
 
-app.server.listen(app.get('port'), function() {
-  console.log("Bodega web application client listening on port " + app.get('port'));
+app.server.listen(app.get('port'), app.get('hostname'), function() {
+  console.log("Bodega web application client listening on " + app.get('hostname') + ':' + app.get('port'));
 });

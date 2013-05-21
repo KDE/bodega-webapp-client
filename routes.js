@@ -28,7 +28,7 @@ function isAuthorized(req, res, next)
 
 app.get('/', function(req, res) {
     res.render('login', {
-        network: app.config.network
+        network: app.config.server.name
     });
     //res.render('index');
 });
@@ -52,7 +52,7 @@ app.get('/login/confirm', function(req, res){
 //register
 app.get('/register', function(req, res) {
     res.render('register', {
-        network: app.config.network
+        network: app.config.server.name
     });
 });
 
@@ -62,7 +62,7 @@ app.post('/register', function(req, res) {
 
 app.get('/register/confirm', function(req, res) {
     res.render('registerconfirm', {
-        network: app.config.network,
+        network: app.config.server.name,
         success: app.operationStatus,
         message: app.operationMessage
     });
@@ -80,7 +80,7 @@ app.post('/account/modify', isAuthorized, function(req, res) {
 app.get('/account/modify/confirm', isAuthorized, function(req, res) {
      res.render('accountmodifyconfirm', {
          result: app.operationStatus,
-         network: app.config.network
+         network: app.config.server.name
     });
 });
 
@@ -91,7 +91,7 @@ app.get('/account', isAuthorized, function(req, res) {
 
 app.get('/account/resetPassword', function(req, res){
     res.render('resetpassword', {
-         network: app.config.network
+         network: app.config.server.name
    });
 });
 
@@ -103,13 +103,13 @@ app.get('/account/resetPassword/confirm', function(req, res){
     res.render('resetpasswordconfirm', {
         message: app.operationMessage,
         result: app.operationStatus,
-        network: app.config.network
+        network: app.config.server.name
     });
 });
 
 app.get('/account/points', isAuthorized, function(req, res) {
     res.render('pointsbuy', {
-        network: app.config.network
+        network: app.config.server.name
     });
 });
 
@@ -123,7 +123,7 @@ app.get('/account/paymentMethod', isAuthorized, function(req, res) {
 
 app.get('/account/paymentMethod/create', isAuthorized, function(req, res) {
     res.render('paymentmethodcreate', {
-        network: app.config.network
+        network: app.config.server.name
     });
 });
 
@@ -133,7 +133,7 @@ app.post('/account/paymentMethod/create', isAuthorized, function(req, res) {
 
 app.get('/account/paymentMethod/create/confirm', isAuthorized, function(req, res) {
     res.render('paymentmethodcreateconfirm', {
-        network: app.config.network,
+        network: app.config.server.name,
         message: app.operationMessage,
         success: app.operationStatus
     });
@@ -153,7 +153,7 @@ app.post('/account/paymentMethod/update', isAuthorized, function(req, res) {
 
 app.get('/account/paymentMethod/update/confirm', isAuthorized, function(req, res) {
     res.render('paymentmethodupdateconfirm', {
-        network: app.config.network,
+        network: app.config.server.name,
         message: app.operationMessage,
         success: app.operationStatus
     });
