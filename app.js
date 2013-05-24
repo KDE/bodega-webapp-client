@@ -36,7 +36,9 @@ app.configure(function() {
     app.use(express.bodyParser());
 
     //app.use(express.methodOverride());
-    app.use(express.static(path.join(__dirname, 'public')));
+    app.use('/css', express.static(__dirname + '/public/css'));
+    app.use('/js', express.static(__dirname + '/public/js'));
+    app.use('/js/validator', express.static(__dirname + '/node_modules/validator/'));
 
     app.use(express.cookieParser());
     app.use(express.session({ secret: "love cookies",
