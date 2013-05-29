@@ -26,7 +26,7 @@ block body
       .row-fluid
         include account
       .row-fluid
-        .span6.offset3
+        .span4.offset5
           form.form-horizontal.well(method='POST', id='modifyAccount')
             fieldset.control-group(id='field-control')
               .control-group
@@ -43,7 +43,7 @@ block body
                   input.xlarge(type='text',  value='#{email}', name='email')
               .control-group
               .controls
-                input.btn-primary(type='submit',id='updateAccount', value='Update Account')
+                input.btn.btn-primary(type='submit',id='updateAccount', value='Update Account')
 
           form.form-horizontal.well(method='POST', id='modifyPassword', onsubmit='return validateForm();')
             fieldset.control-group(id='field-control2')
@@ -58,6 +58,6 @@ block body
                   input.xlarge(type='password', placeholder='Retype your password', name='password2', id='password2')
               .control-group
               .controls
-                input.btn-primary(type='submit',id='updatePassword', value='Update Password')
+                input.btn.btn-primary(type='submit',id='updatePassword', value='Update Password')
 
 
