@@ -191,7 +191,22 @@ $(document).ready(function() {
         verticalDragMaxHeight: 40,
         horizontalDragMinWidth: 20,
         horizontalDragMaxWidth: 40,
-        autoReinitialise: true
+        autoReinitialise: true,
+        maintainPosition: true,
+        alwaysShowScroll: true
+      });
+    });
+
+    $('.search-query').keydown(function(event) {
+      var searchBar = $(this).parent();
+      var accodionElements = $(searchBar).nextAll('li');
+
+      var searchFieldValue = $(this).val().toLowerCase();
+      accodionElements.show();
+      accodionElements.each(function() {
+        if ($(this).text().toLowerCase().indexOf(searchFieldValue) == -1) {
+          $(this).hide();
+        }
       });
     });
   });

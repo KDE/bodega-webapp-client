@@ -25,6 +25,8 @@ block body
                         | #{category.name}
                   .accordion-body.collapse(id='subCategory#{category.id}')
                     .accordion-inner
+                      form.nav-search
+                        input.search-query(type='text', placeholder='Search')
                       for subCategory in category.subcategories
                           li
                             a(href='#', id='#{subCategory.id}', assetcount='#{subCategory.pages}')
