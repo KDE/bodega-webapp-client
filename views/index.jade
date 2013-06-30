@@ -33,7 +33,7 @@ block body
                               | #{subCategory.name}
             else
               li
-                a(href='#', id='#{category.id}', assetcount='#{category.pages}')
+                a(href='#', id='#{category.id}', assetcount='#{category.pages}', isCollection='#{category.isCollection}')
                   img(src='#{category.image}')
                   | #{category.name}
 
