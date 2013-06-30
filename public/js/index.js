@@ -3,6 +3,7 @@ $(document).ready(function() {
     var sockjs = new SockJS(sockjs_url);
     var categoryPage;
     var subCategoryId;
+    var isCollection;
     sockjs.onopen = function() {
       console.log('[*] open', sockjs.protocol);
       //when the user open the index we have to give him a default category with assets
@@ -28,6 +29,17 @@ $(document).ready(function() {
       console.log('[*] close');
     }
 
+    function communicateWithTheServerSideSockJs(categoryId) {
+        var categoryPage = pageNumber();
+        var data = '';
+        if (isCollection) {
+            data = 'collection/' + categoryId + '/' + categoryPage;
+        } else {
+          data = 'channel/' + categoryId + '/' + categoryPage;
+        }
+         sockjs.send(data);
+      }
+
     $('ul.nav.nav-tabs li a').click(function(event) {
       removeElementsFromIndex();
       resetPageNumber();
@@ -36,8 +48,8 @@ $(document).ready(function() {
       var categoryId = $(this).attr('id');
       subCategoryId = categoryId;
       categoryPage = pageNumber();
-      var data = categoryId + '/' + categoryPage;
-      sockjs.send(data);
+      isCollection = $(this).attr('isCollection');
+      communicateWithTheServerSideSockJs(categoryId);
     });
 
     function populateTemplate(id, name, author, version, license, image, largeImage, separator) {
@@ -122,8 +134,7 @@ $(document).ready(function() {
         currentActivePage.removeClass('active');
         nextPage.addClass('active');
         removeElementsFromIndex();
-        var data = subCategoryId + '/' + pageNumber();
-        sockjs.send(data);
+        communicateWithTheServerSideSockJs(subCategoryId);
       }
     });
 
@@ -134,8 +145,7 @@ $(document).ready(function() {
           currentActivePage.removeClass('active');
           prevPage.addClass('active');
           removeElementsFromIndex();
-          var data = subCategoryId + '/' + pageNumber();
-          sockjs.send(data);
+          communicateWithTheServerSideSockJs(subCategoryId);
         }
     });
 
@@ -145,8 +155,7 @@ $(document).ready(function() {
         $('.pagination.pagination-centered li.active').removeClass('active');
         $(this).addClass('active');
         removeElementsFromIndex();
-        var data = subCategoryId + '/' + pageNumber();
-        sockjs.send(data);
+        communicateWithTheServerSideSockJs(subCategoryId);
       }
     });
 
