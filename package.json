@@ -11,7 +11,8 @@
         "connect-redis": "latest",
         "sockjs": "*",
         "rbytes": "*",
-        "validator": "*"
+        "validator": "*",
+        "async": "latest"
     },
     "devDependencies": {
         "jshint": "*"
