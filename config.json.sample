@@ -3,7 +3,7 @@
         "hostname": "addons.makeplaylive.com",
         "port": 3000,
         "api": "/bodega/v1/json/",
-        "network": "MakePlayLive",
+        "network": "Make·Play·Live",
         "store": "VIVALDI-1"
     },
     "client": {
