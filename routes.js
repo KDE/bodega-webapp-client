@@ -42,7 +42,7 @@ app.get('/index', isAuthorized, function(req, res) {
 });
 
 app.get('/newindex', isAuthorized, function(req, res) {
-    res.send('/assets/index.html');
+    res.sendfile(__dirname + '/public/assets/index.html');
 });
 
 app.get('/login/info',isAuthorized,  function(req, res) {
