@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Ember Starter Kit</title>
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/bootstrap-combined.min.css">
+</head>
+<body>
+
+  <script type="text/x-handlebars">
+    <h2>Welcome to Ember.js</h2>
+
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="channels">
+  <div class="container">
+  <div class="row-fluid">
+    <div class="span2">
+      <ul class="nav nav-tabs nav-stacked affix">
+        {{#each item in model}}
+          <li>
+            <a href="#/channels/channel/{{unbound item.id}}">
+                <img src="{{unbound item.image}}">{{item.name}}</img>
+            </a>
+          </li>
+        {{/each}}
+        {{#each item in subChannels}}
+            {{#each channel in item.availableChannels}}
+              <li>
+              <a href="#/channels/channel/{{unbound channel.id}}">
+                <img src="{{unbound channel.image}}">{{channel.name}}</img>
+              </a>
+              </li>
+            {{/each}}
+
+
+        {{/each}}
+      </ul>
+    </div>
+    <div class="span10">
+      {{outlet}}
+    </div>
+  </div>
+</div>
+  </script>
+
+
+  <script type="text/x-handlebars" data-template-name="channel">
+
+    {{#each item in model}}
+        {{#each asset in item.availableAssets}}
+            <ul><li>
+                {{asset.name}}
+            </li></ul>
+        {{/each}}
+    {{/each}}
+
+  </script>
+
+  <script src="/js/jquery-1.9.1.js"></script>
+  <script src="/js/handlebars-1.0.0-rc.4.js"></script>
+  <script src="/js/ember-1.0.0-rc.6.1.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/assets/app.js"></script>
+
+</body>
+</html>
