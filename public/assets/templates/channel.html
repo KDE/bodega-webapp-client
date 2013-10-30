@@ -1,0 +1,12 @@
+  <script type="text/x-handlebars" data-template-name="channel">
+
+    {{#each item in model}}
+        {{#each asset in item.availableAssets}}
+            <ul><li>
+                {{asset.name}}
+            </li></ul>
+        {{/each}}
+    {{/each}}
+
+  </script>
+
