@@ -1,2 +1,5 @@
 node_modules/
 config.json
+public/assets/_app.js
+public/assets/templates/_index.html
+
