@@ -22,6 +22,7 @@ var path = require('path');
 var fs = require('fs');
 var RedisStore = require('connect-redis')(express);
 var sockjs  = require('sockjs');
+
 GLOBAL.app = module.exports = express();
 
 app.config = JSON.parse(fs.readFileSync(('./config.json'), 'utf8'));

@@ -16,13 +16,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 var utils = require('./lib/utils');
+
+var express = require('express');
 var http = require('http');
 
 function isAuthorized(req, res, next)
 {
-    if (req.session.authorized) {
+    if (req.session.webapp_authorized) {
         next();
     } else {
         console.log("Unauthorized user", req, res);
@@ -54,45 +55,45 @@ app.all('/json/*', function(request, response) {
     request.pipe(proxyRequest);
 });
 
-app.get('/', function(req, res) {
+app.get('/', express.bodyParser(), function(req, res) {
     res.render('login', {
         network: app.config.server.name
     });
     //res.render('index');
 });
 
-app.post('/', function(req, res){
+app.post('/', express.bodyParser(), function(req, res){
     app.BodegaManager.login(req, res);
 });
 
-app.get('/index', isAuthorized, function(req, res) {
+app.get('/index', express.bodyParser(), isAuthorized, function(req, res) {
     app.BodegaManager.index(req, res);
 });
 
-app.get('/newindex', isAuthorized, function(req, res) {
+app.get('/newindex', express.bodyParser(), isAuthorized, function(req, res) {
     res.sendfile(__dirname + '/public/assets/index.html');
 });
 
-app.get('/login/info',isAuthorized,  function(req, res) {
+app.get('/login/info', express.bodyParser(), isAuthorized,  function(req, res) {
     app.BodegaManager.loginInfo(req, res);
 });
 
-app.get('/login/confirm', function(req, res){
+app.get('/login/confirm', express.bodyParser(), function(req, res){
     app.BodegaManager.loginconfirm(req, res);
 });
 
 //register
-app.get('/register', function(req, res) {
+app.get('/register', express.bodyParser(), function(req, res) {
     res.render('register', {
         network: app.config.server.name
     });
 });
 
-app.post('/register', function(req, res) {
+app.post('/register', express.bodyParser(), function(req, res) {
     app.BodegaManager.register(req, res);
 });
 
-app.get('/register/confirm', function(req, res) {
+app.get('/register/confirm', express.bodyParser(), function(req, res) {
     res.render('registerconfirm', {
         network: app.config.server.name,
         success: app.operationStatus,
@@ -101,37 +102,37 @@ app.get('/register/confirm', function(req, res) {
 });
 
 //account
-app.get('/account/modify',isAuthorized, function(req, res) {
+app.get('/account/modify', express.bodyParser(), isAuthorized, function(req, res) {
     app.BodegaManager.loginInfo(req, res);
 });
 
-app.post('/account/modify', isAuthorized, function(req, res) {
+app.post('/account/modify', express.bodyParser(), isAuthorized, function(req, res) {
     app.BodegaManager.accountmodify(req, res);
 });
 
-app.get('/account/modify/confirm', isAuthorized, function(req, res) {
+app.get('/account/modify/confirm', express.bodyParser(), isAuthorized, function(req, res) {
      res.render('accountmodifyconfirm', {
          result: app.operationStatus,
          network: app.config.server.name
     });
 });
 
-app.get('/account', isAuthorized, function(req, res) {
+app.get('/account', express.bodyParser(), isAuthorized, function(req, res) {
     res.redirect('/account/modify');
     //res.render('account');
 });
 
-app.get('/account/resetPassword', function(req, res){
+app.get('/account/resetPassword', express.bodyParser(), function(req, res){
     res.render('resetpassword', {
          network: app.config.server.name
    });
 });
 
-app.post('/account/resetPassword', function(req, res){
+app.post('/account/resetPassword', express.bodyParser(), function(req, res){
     app.BodegaManager.resetpassword(req, res);
 });
 
-app.get('/account/resetPassword/confirm', function(req, res){
+app.get('/account/resetPassword/confirm', express.bodyParser(), function(req, res){
     res.render('resetpasswordconfirm', {
         message: app.operationMessage,
         result: app.operationStatus,
@@ -139,31 +140,31 @@ app.get('/account/resetPassword/confirm', function(req, res){
     });
 });
 
-app.get('/account/points', isAuthorized, function(req, res) {
+app.get('/account/points', express.bodyParser(), isAuthorized, function(req, res) {
     res.render('pointsbuy', {
         network: app.config.server.name
     });
 });
 
-app.post('/account/points', isAuthorized, function(req, res) {
+app.post('/account/points', express.bodyParser(), isAuthorized, function(req, res) {
     app.BodegaManager.pointsBuy(req, res);
 });
 
-app.get('/account/paymentMethod', isAuthorized, function(req, res) {
+app.get('/account/paymentMethod', express.bodyParser(), isAuthorized, function(req, res) {
     app.BodegaManager.paymentMethod(req, res);
 });
 
-app.get('/account/paymentMethod/create', isAuthorized, function(req, res) {
+app.get('/account/paymentMethod/create', express.bodyParser(), isAuthorized, function(req, res) {
     res.render('paymentmethodcreate', {
         network: app.config.server.name
     });
 });
 
-app.post('/account/paymentMethod/create', isAuthorized, function(req, res) {
+app.post('/account/paymentMethod/create', express.bodyParser(), isAuthorized, function(req, res) {
     app.BodegaManager.paymentMethodCreate(req, res);
 });
 
-app.get('/account/paymentMethod/create/confirm', isAuthorized, function(req, res) {
+app.get('/account/paymentMethod/create/confirm', express.bodyParser(), isAuthorized, function(req, res) {
     res.render('paymentmethodcreateconfirm', {
         network: app.config.server.name,
         message: app.operationMessage,
@@ -171,19 +172,19 @@ app.get('/account/paymentMethod/create/confirm', isAuthorized, function(req, res
     });
 });
 
-app.get('/account/paymentMethod/delete', isAuthorized, function(req, res) {
+app.get('/account/paymentMethod/delete', express.bodyParser(), isAuthorized, function(req, res) {
     app.BodegaManager.paymentMethodDelete(req, res);
 });
 
-app.get('/account/paymentMethod/update', isAuthorized, function(req, res) {
+app.get('/account/paymentMethod/update', express.bodyParser(), isAuthorized, function(req, res) {
     app.BodegaManager.paymentMethodUpdateInfo(req, res);
 });
 
-app.post('/account/paymentMethod/update', isAuthorized, function(req, res) {
+app.post('/account/paymentMethod/update', express.bodyParser(), isAuthorized, function(req, res) {
     app.BodegaManager.paymentMethodUpdate(req, res);
 });
 
-app.get('/account/paymentMethod/update/confirm', isAuthorized, function(req, res) {
+app.get('/account/paymentMethod/update/confirm', express.bodyParser(), isAuthorized, function(req, res) {
     res.render('paymentmethodupdateconfirm', {
         network: app.config.server.name,
         message: app.operationMessage,
@@ -191,11 +192,11 @@ app.get('/account/paymentMethod/update/confirm', isAuthorized, function(req, res
     });
 });
 
-app.get('/account/history', isAuthorized, function(req, res) {
+app.get('/account/history', express.bodyParser(), isAuthorized, function(req, res) {
     app.BodegaManager.history(req, res);
 });
 
-app.get('/logout', function(req, res) {
+app.get('/logout', express.bodyParser(), function(req, res) {
     req.session.destroy();
     delete app.cookie;
 
