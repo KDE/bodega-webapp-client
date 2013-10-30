@@ -82,6 +82,10 @@ var bodega = require('./lib/bodega.js').BodegaManager;
 var BodegaManager = new bodega();
 app.BodegaManager = BodegaManager;
 
+var ember = require('./lib/emberhelper.js').EmberHelper;
+var EmberHelper = new ember();
+app.EmberHelper = EmberHelper;
+
 require("./routes.js");
 
 app.server.listen(app.get('port'), app.get('hostname'), function() {

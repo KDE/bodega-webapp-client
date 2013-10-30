@@ -70,8 +70,8 @@ app.get('/index', express.bodyParser(), isAuthorized, function(req, res) {
     app.BodegaManager.index(req, res);
 });
 
-app.get('/newindex', express.bodyParser(), isAuthorized, function(req, res) {
-    res.sendfile(__dirname + '/public/assets/index.html');
+app.get('/ember', isAuthorized, function(req, res) {
+    app.EmberHelper.renderEmber(req, res);
 });
 
 app.get('/login/info', express.bodyParser(), isAuthorized,  function(req, res) {
