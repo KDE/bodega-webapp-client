@@ -10,7 +10,6 @@
         "jade": "*",
         "connect-redis": "latest",
         "sockjs": "*",
-        "rbytes": "*",
         "validator": "*"
     },
     "devDependencies": {
