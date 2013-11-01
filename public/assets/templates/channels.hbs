@@ -1,12 +1,16 @@
-<script type="text/x-handlebars" data-template-name="channels">
+<script type="text/x-handlebars" data-template-name="mainPage">
   <div class="container">
     <div class="row-fluid">
       <div class="span2">
         <ul class="nav nav-tabs nav-stacked affix">
           {{#each item in model}}
             <li>
-              <a href="#/channels/channel/{{unbound item.id}}">
-                  <img src="{{unbound item.image}}">{{item.name}}</img>
+              <a href="#/mainPage/{{unbound item.id}}/1">
+                {{!-- <img src="{{unbound item.image}}">{{item.name}}</img> --}}
+                <p> {{item.name}}</p>
+                  {{#each asset in item.availableAssets}}
+                    <p>{{asset.name}}</p>
+                  {{/each}}
               </a>
             </li>
           {{/each}}
