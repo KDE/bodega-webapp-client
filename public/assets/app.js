@@ -21,7 +21,7 @@ App.Channels = Ember.Object.extend({
                 //we have already load our channels
                 p.resolve(channels.get('channelList'));
             } else {
-                p.resolve($.ajax({url: "http://localhost:3001/json/KDE-2/channels"}).then(function(response) {
+                p.resolve($.ajax({url: "http://localhost:3001/json/channels"}).then(function(response) {
                     var channelList = Ember.A();
                     if (response.channels.length > 0) {
                         //App.PREVIOUS_JSON = response;
@@ -45,7 +45,7 @@ App.Channel = Ember.Object.extend({
             if (channels.get('loadedChannel')) {
                 p.resolve(channels.get('channelData'));
             } else {
-                p.resolve($.ajax({url: "http://localhost:3001/json/KDE-2/channel/"+ channel_id}).then(function(response) {
+                p.resolve($.ajax({url: "http://localhost:3001/json/channel/"+ channel_id}).then(function(response) {
                     var channelData = Ember.A();
                     if (response.channels.length > 0) {
                         App.PREVIOUS_JSON = response;
