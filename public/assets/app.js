@@ -10,22 +10,31 @@ App.Router.map(function() {
 
 App.ChannelList = Ember.Object.extend({
     hasLoadedChannels: false,
-
-    findAllChannels: function() {
+    channelList: [],
+    findAllChannels: function(params) {
         var _this = this;
         return Ember.Deferred.promise(function (p) {
             if (_this.get('hasLoadedChannels')) {
-                //we have already load our channels
+                // TODO its not being called!
+                // we have already loaded our channels
+                console.log('We have already loaded the ChannelList');
                 p.resolve(channels.get('channelList'));
             } else {
-                p.resolve($.ajax({url: "http://localhost:3001/json/channels"}).then(function(response) {
+                p.resolve($.ajax({ url: "http://localhost:3001/json/channels" }).then(function(response) {
                     var list = Ember.A();
-                    response.channels.forEach(function(ch) {
-                        var channel = App.Channel.create(ch);
-                        channel.loadChannel(ch.id);
+                    for (var i = 0; i < response.channels.length; i++) {
+                        var channel = App.Channel.create(response.channels[i]);
+                        if (!params.channelId && !params.page && i === 0) {
+                            // load only the first channel
+                            channel.loadChannel(0);
+                            console.log('Use the default channel');
+                        } else {
+                            channel.loadChannel(params.page)
+                            console.log('Load a specific channel')
+                        }
                         list.pushObject(channel);
-                        _this.setProperties({channelList: list, hasLoadedChannels: true});
-                    });
+                    }
+                    _this.setProperties({channelList: list, hasLoadedChannels: true});
                     return list;
                 }));
             }
@@ -35,18 +44,35 @@ App.ChannelList = Ember.Object.extend({
 
 App.Channel = Ember.Object.extend({
     hasLoadedChannel: false,
-    loadChannel: function(channelId) {
+    assets: [],
+    subChannels: [],
+    loadChannel: function(page) {
         var _this = this;
         return Ember.Deferred.promise(function (p) {
+            // TODO its not being called!
             if (_this.get('hasLoadedChannel')) {
-                p.resolve(channels.get('channelData'));
+                console.log('Channel has already been loaded')
+                p.resolve(_this);
             } else {
-                p.resolve($.ajax({url: "http://localhost:3001/json/channel/" + channelId}).then(function(response) {
-                    var channelData = Ember.A();
+                // FIXME remove hardcoded 24
+                var offset = (page > 1) ? ((page - 1) * 24) : 0;
+                p.resolve($.ajax({ url: "http://localhost:3001/json/channel/" + _this.get('id') +'?offset='+ offset }).then(function(response) {
+                    // now lets take the assets
+                    _this.set('assets', response.assets);
 
-                    channelData.pushObject(App.Channel.create({assets: response.assets, childChannels: response.channels}));
-                    _this.setProperties({channelData: channelData, hasLoadedChannel: true});
-                    return channelData;
+                    console.log('The channel with id ' + _this.get('id') + ' and name ' + _this.get('name') +' has the ' + _this.get('assets').length + ' assets');
+                    // a channel may have a subchannel so lets check
+                    if (response.channels.length > 0) {
+                        // ok we have one or more subChannels so lets fetch them
+                        response.channels.forEach(function(item) {
+                            console.log('Parse the subchannels')
+                            var subChannel = App.Channel.create(item);
+                            subChannel.loadChannel(0);
+                            _this.subChannels.pushObject(subChannel);
+                        });
+                    }
+                    _this.setProperties({ hasLoadedChannel: true });
+                    return _this;
                 }));
             }
         });
@@ -61,10 +87,10 @@ App.IndexRoute = Ember.Route.extend({
 });
 
 App.MainPageRoute = Ember.Route.extend({
-    model: function() {
-        return App.ChannelList.create().findAllChannels();
+    model: function(params) {
+        return App.ChannelList.create().findAllChannels(params);
     },
-    serialize: function(model) {
+    serialize: function(model, params) {
        return {channelId: model[0].id, page: 1}
     }
 });
