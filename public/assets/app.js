@@ -5,7 +5,7 @@ App = Ember.Application.create({
 
 App.Router.map(function() {
   // put your routes here
-  this.resource('mainPage', { path: '/mainPage/:channelId/:page' });
+  this.resource('mainPage', { path: '/mainPage/:channelId/:page/:rootChannelId' });
 });
 
 App.ChannelList = Ember.Object.extend({
@@ -26,15 +26,18 @@ App.ChannelList = Ember.Object.extend({
                         var channel = App.Channel.create(response.channels[i]);
                         if (!params.channelId && !params.page && i === 0) {
                             // load only the first channel
-                            channel.loadChannel(0);
+                            channel.loadChannel(0, channel.get('id'));
                             console.log('Use the default channel');
-                        } else {
-                            channel.loadChannel(params.page)
-                            console.log('Load a specific channel')
+                        }
+                        var requestedChannelId = params.rootChannelId != 0 ? params.rootChannelId : params.channelId;
+                        if (requestedChannelId == channel.get('id')) {
+                            // this is a sub channel
+                            console.log('Load the channel')
+                            channel.loadChannel(params.page, params.channelId)
                         }
                         list.pushObject(channel);
                     }
-                    _this.setProperties({channelList: list, hasLoadedChannels: true});
+                    _this.setProperties({ channelList: list, hasLoadedChannels: true });
                     return list;
                 }));
             }
@@ -46,7 +49,7 @@ App.Channel = Ember.Object.extend({
     hasLoadedChannel: false,
     assets: [],
     subChannels: [],
-    loadChannel: function(page) {
+    loadChannel: function(page, requestedChannelId) {
         var _this = this;
         return Ember.Deferred.promise(function (p) {
             // TODO its not being called!
@@ -62,8 +65,9 @@ App.Channel = Ember.Object.extend({
 
                     console.log('The channel with id ' + _this.get('id') + ' and name ' + _this.get('name') +' has the ' + _this.get('assets').length + ' assets');
                     // a channel may have a subchannel so lets check
-                    if (response.channels.length > 0) {
-                        // ok we have one or more subChannels so lets fetch them
+                    if (response.channels.length > 0 && _this.get('id') != requestedChannelId) {
+                        // ok we have one or more subChannels and we haven't found the
+                        // requested channel so lets fetch them
                         response.channels.forEach(function(item) {
                             console.log('Parse the subchannels')
                             var subChannel = App.Channel.create(item);
@@ -91,7 +95,7 @@ App.MainPageRoute = Ember.Route.extend({
         return App.ChannelList.create().findAllChannels(params);
     },
     serialize: function(model, params) {
-       return {channelId: model[0].id, page: 1}
+       return { channelId: model[0].id, page: 1, rootChannelId: 0 }
     }
 });
 
