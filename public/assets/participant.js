@@ -9,8 +9,14 @@ App.Participant = Ember.Object.extend({
                     middleName: response.middleName,
                     email: response.email
                 };
-                _this.setProperties(info);
                 return info;
+            }));
+        });
+    },
+    loadHistory: function() {
+        return Ember.Deferred.promise(function (p) {
+            p.resolve($.ajax({ url: "http://localhost:3001/json/participant/history" }).then(function(response) {
+                return response.history;
             }));
         });
     }
