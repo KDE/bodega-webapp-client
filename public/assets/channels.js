@@ -1,6 +1,5 @@
 App.ChannelList = Ember.Object.extend({
     hasLoadedChannels: false,
-    channelList: [],
     findAllChannels: function(params) {
         var _this = this;
         return Ember.Deferred.promise(function (p) {
@@ -27,7 +26,6 @@ App.ChannelList = Ember.Object.extend({
                         }
                         list.pushObject(channel);
                     }
-                    _this.setProperties({ channelList: list, hasLoadedChannels: true });
                     return list;
                 }));
             }
