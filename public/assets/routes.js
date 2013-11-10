@@ -14,3 +14,9 @@ App.MainPageRoute = Ember.Route.extend({
     }
 });
 
+App.ParticipantRoute = Ember.Route.extend({
+    model: function(params) {
+        return App.Participant.create().loadInfo();
+    }
+});
+
