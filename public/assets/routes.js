@@ -20,3 +20,9 @@ App.ParticipantRoute = Ember.Route.extend({
     }
 });
 
+App.ParticipantHistoryRoute = Ember.Route.extend({
+    model: function(params) {
+        return App.Participant.create().loadHistory();
+    }
+});
+
