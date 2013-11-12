@@ -6,29 +6,49 @@
           {{#each item in model}}
             <li>
               <a href="#/mainPage/{{unbound item.id}}/1">
-                {{!-- <img src="{{unbound item.image}}">{{item.name}}</img> --}}
-                <p> {{item.name}}</p>
-                  {{#each asset in item.availableAssets}}
-                    <p>{{asset.name}}</p>
-                  {{/each}}
+                 <img src="{{unbound item.image}}">{{item.name}}</img>
+              </a>
+            </li>
+          {{#each subChannel in item.subChannels}}
+            <li>
+              <a href="#/mainPage/{{unbound item.id}}/1">
+                 <img src="{{unbound subChannel.image}}">{{subChannel.name}}</img>
               </a>
             </li>
           {{/each}}
-          {{#each item in subChannels}}
-              {{#each channel in item.availableChannels}}
-                <li>
-                <a href="#/channels/channel/{{unbound channel.id}}">
-                  <img src="{{unbound channel.image}}">{{channel.name}}</img>
-                </a>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="span10">
+        <div class="row-fluid show-grid">
+          <ul class="thumbnails">
+            {{#each item in model}}
+              {{#each asset in item.assets}}
+                <li class="span4">
+                  <div class="thumbnail" align="center">
+                    <a href="#modal_id{{unbound asset.id}}" data-toggle="modal">
+                      <img src="{{unbound asset.image}}">{{asset.name}}</img>
+                    </a>
+
+                    <div class="modal hide fade" id="modal_id{{unbound asset.id}}" tabindex="-1" role="dialog" align="center">
+                      <div class="modal-body">
+                        <img src="{{unbound asset.image}}"></img>
+                        <h2>{{asset.name}}</h2>
+                        <p>Parter Name: {{asset.partnername}}</p>
+                        <p>Version: {{asset.version}}</p>
+                        <p>License: {{asset.license}}</p>
+                      </div>
+                    </div>
+                  </div>
                 </li>
               {{/each}}
-        {{/each}}
-      </ul>
-    </div>
-    <div class="span10">
-      {{outlet}}
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+
     </div>
   </div>
-</div>
 </script>
 
