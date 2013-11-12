@@ -5,13 +5,13 @@
         <ul class="nav nav-tabs nav-stacked affix">
           {{#each item in model}}
             <li>
-              <a href="#/mainPage/{{unbound item.id}}/1">
+              <a href="#/mainPage/{{unbound item.id}}/{{unbound item.pageId}}/{{unbound item.rootChannelId}}">
                  <img src="{{unbound item.image}}">{{item.name}}</img>
               </a>
             </li>
           {{#each subChannel in item.subChannels}}
             <li>
-              <a href="#/mainPage/{{unbound item.id}}/1">
+              <a href="#/mainPage/{{unbound subChannel.id}}/{{unbound subChannel.pageId}}/{{unbound subChannel.rootChannelId}}">
                  <img src="{{unbound subChannel.image}}">{{subChannel.name}}</img>
               </a>
             </li>
