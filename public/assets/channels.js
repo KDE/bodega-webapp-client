@@ -104,11 +104,11 @@ App.ChannelDataComponent = Ember.Component.extend({
 });
 
 App.ParentChannelsComponent = Ember.Component.extend({
-    tagName: 'li',
+    tagName: 'li'
 });
 
 App.SubChannelsComponent = Ember.Component.extend({
-    tagName: ['ul'],
+    tagName: 'ul',
     classNames: ['nav', 'nav-list' ]
 });
 
@@ -132,5 +132,5 @@ App.AssetModalComponent = Ember.Component.extend({
     attributeBindings: ['id', 'tabindex', 'role', 'align'],
     tabindex: -1,
     role: 'dialog',
-    align: 'center',
+    align: 'center'
 });
