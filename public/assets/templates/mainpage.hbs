@@ -2,22 +2,7 @@
   <div class="container">
     <div class="row-fluid">
       <div class="span2">
-        <ul class="nav nav-tabs nav-stacked affix">
-          {{#each item in model}}
-            <li>
-              <a href="#/mainPage/{{unbound item.id}}/{{unbound item.pageId}}/{{unbound item.rootChannelId}}">
-                 <img src="{{unbound item.image}}">{{item.name}}</img>
-              </a>
-            </li>
-          {{#each subChannel in item.subChannels}}
-            <li>
-              <a href="#/mainPage/{{unbound subChannel.id}}/{{unbound subChannel.pageId}}/{{unbound subChannel.rootChannelId}}">
-                 <img src="{{unbound subChannel.image}}">{{subChannel.name}}</img>
-              </a>
-            </li>
-          {{/each}}
-          {{/each}}
-        </ul>
+          {{channels-list list=model}}
       </div>
 
       <div class="span10">
@@ -52,3 +37,29 @@
   </div>
 </script>
 
+<script type="text/x-handlebars" data-template-name="components/channels-list">
+  {{parent-channels parentChannels=list}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="components/parent-channels">
+  {{#each channel in parentChannels}}
+    {{channel-data data=channel}}
+  {{/each}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="components/sub-channels">
+  {{#each subChannel in subChannels}}
+    {{channel-data data=subChannel}}
+  {{/each}}
+</script>
+
+
+<script type="text/x-handlebars" data-template-name="components/channel-data">
+    <a href="#/mainPage/{{unbound data.id}}/{{unbound data.pageId}}/{{unbound data.rootChannelId}}">
+        <img src="{{unbound data.image}}">{{data.name}}</img>
+    </a>
+
+  {{#if isExpanded}}
+    {{sub-channels subChannels=data.subChannels}}
+  {{/if}}
+</script>

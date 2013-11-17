@@ -1,0 +1,50 @@
+.bs-sidebar {
+  padding-top:    10px;
+  padding-bottom: 10px;
+  text-shadow: 0 1px 0 #fff;
+  background-color: #f7f5fa;
+  border-radius: 5px;
+}
+
+
+.bs-sidebar.affix {
+  position: static;
+}
+
+/* All levels of nav */
+.bs-sidebar li > a {
+  display: block;
+  color: #005580;
+  padding: 5px 20px;
+}
+
+.bs-sidebar  li > a:hover,
+.bs-sidebar  li > a:focus {
+  text-decoration: none;
+  background-color: #e5e3e9;
+  color: #005580;
+  border-right: 1px solid #563d7c;
+}
+
+.bs-sidebar .expand > a,
+.bs-sidebar .expand:hover > a,
+.bs-sidebar .expand:focus > a {
+  font-weight: bold;
+  color: #005580
+  background-color: transparent;
+  border-right: 1px solid #005580;
+}
+.bs-sidebar li > a {
+  padding-top:    3px;
+  padding-bottom: 3px;
+  padding-left: 30px;
+  font-size: 90%;
+}
+
+@media (min-width: 1200px) {
+  /* Widen the fixed sidebar again */
+  .bs-sidebar.affix-bottom,
+  .bs-sidebar.affix {
+    width: 180px;
+  }
+}

@@ -16,6 +16,7 @@ App.ChannelList = Ember.Object.extend({
                         var channel = App.Channel.create(response.channels[i]);
                         channel.set('pageId', params.page);
                         channel.set('rootChannelId', params.rootChannelId);
+                        channel.set('currentChannelId', params.channelId);
                         if (!params.channelId && !params.page && i === 0) {
                             // load only the first channel
                             channel.loadChannel(0, channel.get('id'));
@@ -25,7 +26,7 @@ App.ChannelList = Ember.Object.extend({
                         if (requestedChannelId == channel.get('id')) {
                             // this is a sub channel
                             console.log('Load the channel')
-                            channel.loadChannel(params.channelId)
+                            channel.loadChannel(params.channelId, params)
                         }
                         list.pushObject(channel);
                     }
@@ -39,7 +40,7 @@ App.ChannelList = Ember.Object.extend({
 App.Channel = Ember.Object.extend({
     hasLoadedChannel: false,
     assets: [],
-    loadChannel: function(requestedChannelId) {
+    loadChannel: function(requestedChannelId, params) {
         var _this = this;
         var subChannels= [];
         return Ember.Deferred.promise(function (p) {
@@ -65,6 +66,7 @@ App.Channel = Ember.Object.extend({
                             var subChannel = App.Channel.create(item);
                             subChannel.set("pageId", page);
                             subChannel.set("rootChannelId", _this.get('id'));
+                            subChannel.set('currentChannelId', params.channelId);
                             if (_this.get('id') != requestedChannelId) {
                                 console.log('Parse the subchannels')
                                 subChannel.loadChannel(0);
@@ -82,3 +84,35 @@ App.Channel = Ember.Object.extend({
     }
 });
 
+App.ChannelDataComponent = Ember.Component.extend({
+    tagName: 'li',
+    classNameBindings: ['isExpanded:expand'],
+    isExpanded:  function() {
+        var _this = this;
+        var data = _this.get('data');
+
+        if (data.rootChannelId == 0) {
+            return true;
+        } else if (data.rootChannelId == data.id) {
+            return true;
+        } else if (data.id == data.currentChannelId) {
+            return true;
+        } else {
+            return false;
+        }
+    }.property()
+});
+
+App.ParentChannelsComponent = Ember.Component.extend({
+    tagName: 'li',
+});
+
+App.SubChannelsComponent = Ember.Component.extend({
+    tagName: ['ul'],
+    classNames: ['nav', 'nav-list' ]
+});
+
+App.ChannelsListComponent = Ember.Component.extend({
+    tagName: 'ul',
+    classNames: [ 'bs-sidebar','nav', 'nav-list', 'affix' ]
+});
