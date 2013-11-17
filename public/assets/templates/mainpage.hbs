@@ -10,23 +10,7 @@
           <ul class="thumbnails">
             {{#each item in model}}
               {{#each asset in item.assets}}
-                <li class="span4">
-                  <div class="thumbnail" align="center">
-                    <a href="#modal_id{{unbound asset.id}}" data-toggle="modal">
-                      <img src="{{unbound asset.image}}">{{asset.name}}</img>
-                    </a>
-
-                    <div class="modal hide fade" id="modal_id{{unbound asset.id}}" tabindex="-1" role="dialog" align="center">
-                      <div class="modal-body">
-                        <img src="{{unbound asset.image}}"></img>
-                        <h2>{{asset.name}}</h2>
-                        <p>Parter Name: {{asset.partnername}}</p>
-                        <p>Version: {{asset.version}}</p>
-                        <p>License: {{asset.license}}</p>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+                {{asset-thumbnail data=asset}}
               {{/each}}
             {{/each}}
           </ul>
@@ -53,7 +37,6 @@
   {{/each}}
 </script>
 
-
 <script type="text/x-handlebars" data-template-name="components/channel-data">
     <a href="#/mainPage/{{unbound data.id}}/{{unbound data.pageId}}/{{unbound data.rootChannelId}}">
         <img src="{{unbound data.image}}">{{data.name}}</img>
@@ -62,4 +45,23 @@
   {{#if isExpanded}}
     {{sub-channels subChannels=data.subChannels}}
   {{/if}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="components/asset-thumbnail">
+  <div class="thumbnail" align="center">
+    <a href="#modal_id{{unbound data.id}}" data-toggle="modal">
+      <img src="{{unbound data.image}}">{{data.name}}</img>
+    </a>
+    {{asset-modal data=data id=modalId}}
+  </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="components/asset-modal">
+<div class="modal-body">
+  <img src="{{unbound data.image}}"></img>
+  <h2>{{data.name}}</h2>
+  <p>Parter Name: {{data.partnername}}</p>
+  <p>Version: {{data.version}}</p>
+  <p>License: {{data.license}}</p>
+</div>
 </script>

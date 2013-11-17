@@ -116,3 +116,21 @@ App.ChannelsListComponent = Ember.Component.extend({
     tagName: 'ul',
     classNames: [ 'bs-sidebar','nav', 'nav-list', 'affix' ]
 });
+
+App.AssetThumbnailComponent = Ember.Component.extend({
+    tagName: 'li',
+    classNames: ['span4'],
+    modalId: function() {
+        var _this = this;
+        var data = _this.get('data');
+        return 'modal_id' + data.id;
+    }.property()
+});
+
+App.AssetModalComponent = Ember.Component.extend({
+    classNames: ['modal', 'hide', 'fade'],
+    attributeBindings: ['id', 'tabindex', 'role', 'align'],
+    tabindex: -1,
+    role: 'dialog',
+    align: 'center',
+});
