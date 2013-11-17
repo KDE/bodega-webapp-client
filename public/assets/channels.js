@@ -26,7 +26,7 @@ App.ChannelList = Ember.Object.extend({
                         if (requestedChannelId == channel.get('id')) {
                             // this is a sub channel
                             console.log('Load the channel')
-                            channel.loadChannel(params.channelId, params)
+                            channel.loadChannel(params.channelId, params.channelId)
                         }
                         list.pushObject(channel);
                     }
@@ -40,7 +40,7 @@ App.ChannelList = Ember.Object.extend({
 App.Channel = Ember.Object.extend({
     hasLoadedChannel: false,
     assets: [],
-    loadChannel: function(requestedChannelId, params) {
+    loadChannel: function(requestedChannelId, currentChannelId) {
         var _this = this;
         var subChannels= [];
         return Ember.Deferred.promise(function (p) {
@@ -66,7 +66,7 @@ App.Channel = Ember.Object.extend({
                             var subChannel = App.Channel.create(item);
                             subChannel.set("pageId", page);
                             subChannel.set("rootChannelId", _this.get('id'));
-                            subChannel.set('currentChannelId', params.channelId);
+                            subChannel.set('currentChannelId', currentChannelId);
                             if (_this.get('id') != requestedChannelId) {
                                 console.log('Parse the subchannels')
                                 subChannel.loadChannel(0);
