@@ -132,5 +132,20 @@ App.AssetModalComponent = Ember.Component.extend({
     attributeBindings: ['id', 'tabindex', 'role', 'align'],
     tabindex: -1,
     role: 'dialog',
-    align: 'center'
+    align: 'center',
+
+    purchaseRequested: false,
+
+    actions: {
+        purchaseAsset: function(data) {
+            var _this = this;
+            App.Participant.purchaseAsset(data.id).then(function(response) {
+                if (response.error && response.error.type) {
+                    _this.set('purchaseError', response.error.type);
+                }
+
+                _this.set('purchaseRequested', true);
+            });
+        }
+    }
 });

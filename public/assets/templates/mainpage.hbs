@@ -60,6 +60,23 @@
 <div class="modal-body">
   <img src="{{unbound data.image}}"></img>
   <h2>{{data.name}}</h2>
+
+  {{#if purchaseRequested}}
+    {{#if purchaseError}}
+      <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <h3>An error has occur {{purchaseError}}</h3>
+      </div>
+    {{else}}
+      <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <h3>You have successfully purchase the asset {{data.name}}</h3>
+      </div>
+    {{/if}}
+  {{/if}}
+
+  <button {{action "purchaseAsset" data}} class="btn">Purchase Asset</button>
+
   <p>Parter Name: {{data.partnername}}</p>
   <p>Version: {{data.version}}</p>
   <p>License: {{data.license}}</p>

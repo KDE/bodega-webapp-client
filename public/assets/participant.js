@@ -36,6 +36,18 @@ App.Participant.reopenClass({
         if (newPassword) {
             $.ajax({ url: 'http://localhost:3001/json/participant/changePassword?newPassword=' + newPassword });
         }
+    },
+
+    purchaseAsset: function(assetId) {
+        if (assetId > 0) {
+            return Ember.Deferred.promise(function (p) {
+                p.resolve( $.ajax({url: 'http://localhost:3001/json/purchase/' + assetId }).then(function(response) {
+                    return response;
+                }));
+            });
+        } else {
+            console.log('assetId' + assetId + 'doesn\'t exists!');
+        }
     }
 });
 
