@@ -51,3 +51,110 @@ App.Participant.reopenClass({
     }
 });
 
+App.ParticipantPaymentMethod = Ember.Object.extend({
+    loadPaymentMethod: function() {
+        var _this = this;
+        return Ember.Deferred.promise(function (p) {
+            p.resolve($.ajax({ url: "http://localhost:3001/json/participant/paymentMethod" }).then(function(response) {
+                return response;
+            }));
+        });
+    }
+});
+
+
+App.ParticipantPaymentMethod.reopenClass({
+    updatePaymentMethod: function(cardData) {
+        if (cardData) {
+            var query = {
+                "card[type]": cardData.card,
+                "card[name]": cardData.inputName,
+                "card[number]": cardData.inputNumber,
+                "card[cvc]": cardData.inputCvc,
+                "card[exp_month]": cardData.inputMonthExpires,
+                "card[exp_year]": cardData.inputYearExpires
+            };
+
+            return Ember.Deferred.promise(function (p) {
+                p.resolve($.ajax({ url: "http://localhost:3001/json/participant/changeAccountDetails?" + query }).then(function(response) {
+                    return response;
+                }));
+            });
+        }
+    }
+})
+
+App.CreditCardComponent = Ember.Component.extend({
+    classNames: ['form-horizontal'],
+    tagName: 'form',
+    cardExpMonthChoice: null,
+    cardExpYearChoice: null,
+    cardNameInvalid: false,
+    cardNumberInvalid: false,
+    cardCvcInvalid: false,
+
+    cardExpMonthChoices: function() {
+        var _this = this;
+        var choice = Ember.A();
+        $.map($(Array(12)),function(val, i) {
+              choice.pushObject(i+1);
+        })
+
+        return choice;
+    }.property(),
+
+    cardExpYearChoices: function() {
+        var _this = this;
+        var choice = Ember.A();
+        var date = new Date();
+        var currentYear = date.getFullYear();
+        $.map($(Array(30)),function(val, i) {
+              choice.pushObject(i+currentYear);
+        })
+
+        return choice;
+    }.property(),
+
+    purchaseMethodMissing: function() {
+        var _this = this;
+        var error = _this.get('error');
+        if (error && error.type) {
+            console.log(error)
+            return error.type === 'PurchaseMethodMissing';
+        }
+    }.property(),
+
+    retrieveCardData: function() {
+        var _this = this;
+        var cardData = {
+            'card[type]': _this.get('cardType'),
+            'card[name]': _this.get('cardName'),
+            'card[number]': _this.get('cardNumber'),
+            'card[cvc]': _this.get('cardCvc'),
+            'card[exp_month]': _this.get('cardExpMonthChoice'),
+            'card[exp_year]': _this.get('cardExpYearChoice')
+        };
+
+        return cardData;
+    },
+
+    cardDataIsValid: function(cardData) {
+        var _this = this;
+        _this.set('cardNameInvalid', !/^[a-z]|[A-Z]+/i.test(cardData['card[name]']));
+        _this.set('cardNumberInvalid', !/^[0-9]+$/i.test(cardData['card[number]']));
+        _this.set('cardCvcInvalid', !/^[0-9]+$/i.test(cardData['card[cvc]']));
+    },
+
+    actions: {
+        updatePaymentMethod: function() {
+            var _this = this;
+            var cardData = _this.retrieveCardData();
+            _this.cardDataIsValid(cardData);
+            App.ParticipantPaymentMethod.updatePaymentMethod(cardData).then(function(response) {
+                if (resolve.error && resolve.error.type) {
+                    _this.set('updatePaymentMethodError', response.error.type);
+                }
+            });
+        }
+    }
+});

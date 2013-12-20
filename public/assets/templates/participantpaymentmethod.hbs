@@ -1,0 +1,116 @@
+<script type="text/x-handlebars" data-template-name="participantPaymentMethod">
+  {{#if model.error}}
+    {{credit-card error=model.error}}
+  {{else}}
+    {{credit-card cardData=model}}
+  {{/if}}
+</script>
+
+
+<script type="text/x-handlebars" data-template-name="components/credit-card">
+
+  <fieldset>
+  
+  <!-- Form Name -->
+  <legend>Form Name</legend>
+
+  <!-- Multiple Radios -->
+  <div class="control-group">
+    <label class="control-label" for="cardType">Card Type</label>
+    <div class="controls">
+      <label class="radio" for="cardType-0">
+        {{input type="radio" name="cardType" id="cardType-0" value="Visa" checked="checked"}}
+        Visa
+      </label>
+      <label class="radio" for="cardType-1">
+        {{input type="radio" name="cardType" id="cardType-1" value="Master Card"}}
+        Master Card
+      </label>
+      <label class="radio" for="cardType-2">
+        {{input type="radio" name="cardType" id="cardType-2" value="American Express"}}
+        American Express
+      </label>
+      <label class="radio" for="cardType-3">
+        {{input type="radio" name="cardType" id="cardType-3" value="Dinners Club"}}
+        Dinners Club
+      </label>
+    </div>
+  </div>
+
+  <!-- Text input-->
+  <div class="control-group">
+    <label class="control-label" for="cardName">Name on Card:</label>
+    <div class="controls">
+      {{input id="cardName" name="cardName" type="text" placeholder="Please type your full name" class="input-xlarge" value=cardName}}
+      {{#if cardNameInvalid}}
+        <p class="text-error">Your name is not valid</p>
+      {{/if}}
+    </div>
+  </div>
+
+  <!-- Text input-->
+  <div class="control-group">
+    <label class="control-label" for="cardNumber">Number:</label>
+    <div class="controls">
+      {{input id="cardNumber" name="cardNumber" type="text" placeholder="Please type your card number" class="input-xlarge" value=cardNumber required=""}}
+      {{#if cardNumberInvalid}}
+        <p class="text-error">Your card number is not valid</p>
+      {{/if}}
+    </div>
+  </div>
+
+  <!-- Text input-->
+  <div class="control-group">
+    <label class="control-label" for="cardCvc">CVC:</label>
+    <div class="controls">
+      {{input id="cardCvc" name="cardCvc" type="text" placeholder="Please type your cvc" class="input-xlarge" value=cardCvc required=""}}
+      {{#if cardCvcInvalid}}
+          <p class="text-error">Your cvc number is not valid</p>
+      {{/if}}
+    </div>
+  </div>
+
+  <!-- Select Basic -->
+  <div class="control-group">
+    <label class="control-label" for="cardExpMonth">Expire Month:</label>
+    <div class="controls">
+    {{view Ember.Select
+       content=cardExpMonthChoices
+       value=cardExpMonthChoice
+    }}
+
+    </div>
+  </div>
+
+  <!-- Select Basic -->
+  <div class="control-group">
+    <label class="control-label" for="cardExpYear">Expire Year:</label>
+    <div class="controls">
+      {{view Ember.Select
+       content=cardExpYearChoices
+       value=cardExpYearChoice
+      }}
+    </div>
+  </div>
+
+  {{#if purchaseMethodMissing}}
+    <!-- Button -->
+    <div class="control-group">
+      <label class="control-label" for="addCreditCard"></label>
+      <div class="controls">
+        <button id="addCreditCard" {{action 'updatePaymentMethod'}} name="addCreditCard" class="btn btn-primary">Add Your Credit Card</button>
+      </div>
+    </div>
+  {{else}}
+    <!-- Button -->
+    <div class="control-group">
+      <label class="control-label" for="updateCreditCard"></label>
+      <div class="controls">
+        <button id="updateCreditCard" name="updateCreditCard" class="btn btn-primary">Update Your Credit Card</button>
+      </div>
+    </div>
+  {{/if}}
+  
+  </fieldset>
+</script>
+

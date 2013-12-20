@@ -7,6 +7,7 @@ App.Router.map(function() {
     // put your routes here
     this.resource('mainPage', { path: '/mainPage/:channelId/:page/:rootChannelId' });
     this.resource('participant', { path: '/participant' });
+    this.resource('participantPaymentMethod', { path: '/participant/paymentMethod'});
     this.resource('participantHistory', { path: '/participant/history' });
 });
 
