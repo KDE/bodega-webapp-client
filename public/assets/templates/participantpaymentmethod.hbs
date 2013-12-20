@@ -10,28 +10,40 @@
 <script type="text/x-handlebars" data-template-name="components/credit-card">
 
   <fieldset>
-  
-  <!-- Form Name -->
-  <legend>Form Name</legend>
+
+  <!-- Update information progress -->
+  {{#if updatePaymentMethodRequested}}
+    {{#if updatePaymentMethodError}}
+        <div class="alert alert-error">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <h3>An error has occur {{updatePaymentMethodError}}</h3>
+        </div>
+    {{else}}
+        <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <h3>Your credit card information has been updated successfully</h3>
+        </div>
+    {{/if}}
+  {{/if}}
 
   <!-- Multiple Radios -->
   <div class="control-group">
     <label class="control-label" for="cardType">Card Type</label>
     <div class="controls">
       <label class="radio" for="cardType-0">
-        {{input type="radio" name="cardType" id="cardType-0" value="Visa" checked="checked"}}
+        {{view Ember.RadioButton name="cardTypeSelection" selectionBinding="cardTypeChoice" value="Visa"}}
         Visa
       </label>
       <label class="radio" for="cardType-1">
-        {{input type="radio" name="cardType" id="cardType-1" value="Master Card"}}
+        {{view Ember.RadioButton name="cardTypeSelection" selectionBinding="cardTypeChoice" value="Master Card"}}
         Master Card
       </label>
       <label class="radio" for="cardType-2">
-        {{input type="radio" name="cardType" id="cardType-2" value="American Express"}}
+        {{view Ember.RadioButton name="cardTypeSelection" selectionBinding="cardTypeChoice" value="American Express"}}
         American Express
       </label>
       <label class="radio" for="cardType-3">
-        {{input type="radio" name="cardType" id="cardType-3" value="Dinners Club"}}
+        {{view Ember.RadioButton name="cardTypeSelection" selectionBinding="cardTypeChoice" value="Dinners Club"}}
         Dinners Club
       </label>
     </div>
@@ -110,7 +122,7 @@
       </div>
     </div>
   {{/if}}
-  
+
   </fieldset>
 </script>
 

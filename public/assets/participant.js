@@ -62,7 +62,6 @@ App.ParticipantPaymentMethod = Ember.Object.extend({
     }
 });
 
-
 App.ParticipantPaymentMethod.reopenClass({
     updatePaymentMethod: function(cardData) {
         if (cardData) {
@@ -89,9 +88,11 @@ App.CreditCardComponent = Ember.Component.extend({
     tagName: 'form',
     cardExpMonthChoice: null,
     cardExpYearChoice: null,
+    cardTypeChoice: null,
     cardNameInvalid: false,
     cardNumberInvalid: false,
     cardCvcInvalid: false,
+    updatePaymentMethodRequested: false,
 
     cardExpMonthChoices: function() {
         var _this = this;
@@ -127,12 +128,12 @@ App.CreditCardComponent = Ember.Component.extend({
     retrieveCardData: function() {
         var _this = this;
         var cardData = {
-            'card[type]': _this.get('cardType'),
-            'card[name]': _this.get('cardName'),
-            'card[number]': _this.get('cardNumber'),
-            'card[cvc]': _this.get('cardCvc'),
-            'card[exp_month]': _this.get('cardExpMonthChoice'),
-            'card[exp_year]': _this.get('cardExpYearChoice')
+            'card': _this.get('cardTypeChoice'),
+            'inputName': _this.get('cardName'),
+            'inputNumber': _this.get('cardNumber'),
+            'inputCvc': _this.get('cardCvc'),
+            'inputMonthExpires': _this.get('cardExpMonthChoice'),
+            'inputYearExpires': _this.get('cardExpYearChoice')
         };
 
         return cardData;
@@ -150,11 +151,15 @@ App.CreditCardComponent = Ember.Component.extend({
             var _this = this;
             var cardData = _this.retrieveCardData();
             _this.cardDataIsValid(cardData);
+            _this.set('updatePaymentMethodRequested', true);
             App.ParticipantPaymentMethod.updatePaymentMethod(cardData).then(function(response) {
-                if (resolve.error && resolve.error.type) {
+                console.log(response)
+                if (response.error && response.error.type) {
                     _this.set('updatePaymentMethodError', response.error.type);
                 }
             });
         }
     }
 });
+
+
