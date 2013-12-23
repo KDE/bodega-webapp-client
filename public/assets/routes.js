@@ -20,6 +20,12 @@ App.ParticipantRoute = Ember.Route.extend({
     }
 });
 
+App.ParticipantInfoRoute = Ember.Route.extend({
+    model: function(params) {
+        return App.ParticipantInfo.create().loadInfo();
+    }
+});
+
 App.ParticipantPaymentMethodRoute = Ember.Route.extend({
     model: function(params) {
         return App.ParticipantPaymentMethod.create().loadPaymentMethod();

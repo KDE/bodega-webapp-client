@@ -20,6 +20,7 @@ var utils = require('./lib/utils');
 
 var express = require('express');
 var http = require('http');
+var request = require('request');
 
 function isAuthorized(req, res, next)
 {
@@ -31,28 +32,32 @@ function isAuthorized(req, res, next)
     }
 }
 
-app.all('/json/*', function(request, response) {
-    var options = utils.options(request, request.url.substring(String("/json/").length), null, true);
-    options.method = request.method;
+app.all('/json/*', function(req, res) {
+    var relativeUrl = req.url.substring(String("/json/").length);
+    var serverUrl = 'http://' + app.config.server.hostname + ':' + app .config.server.port + app.config.server.api + relativeUrl;
 
-    //console.log(JSON.stringify(request.headers.cookie));
-    //options.headers['Content-Type'] = request.headers['content-type'];
-    if (request.headers['content-length']) {
-        options.headers['content-length'] = request.headers['content-length']
-    }
+    var isPostMethod = req.method === 'POST';
+    var data = isPostMethod ? req.body : req.query;
 
-    var proxyRequest = http.request(options);
+    request(utils.makeOptions(serverUrl, data, req, isPostMethod), function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            res.json(body);
+        } else {
+            console.log('there is an error: ' + error);
+            console.log('with statusCode: ' + response.statusCode);
 
-    proxyRequest.addListener('response', function (proxy_response) {
-        response.writeHead(proxy_response.statusCode, proxy_response.headers);
-        proxy_response.pipe(response);
+            // In case that the remote request has failed,
+            // bodega-server hasn't provide us an error.
+            // so let's provide a custom one.
+            var errorStatus = {
+                'error': {
+                    'type': error
+                }
+            };
+
+            res.json(errorStatus);
+        }
     });
-
-    proxyRequest.on('error', function(e) {
-        console.log('problem with request: ' + e.message);
-    });
-
-    request.pipe(proxyRequest);
 });
 
 app.get('/', express.bodyParser(), function(req, res) {

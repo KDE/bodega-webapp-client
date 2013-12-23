@@ -1,0 +1,80 @@
+<script type="text/x-handlebars" data-template-name="participantInfo">
+  <p>{{firstName}}</p>
+  <p>{{lastName}}</p>
+  <p>{{email}}</p>
+
+  {{#if middleNames}}
+    <p>aaaa{{middleNames}}</p>
+  {{/if}}
+  {{model}}
+  {{account-info accountData=model}}
+  
+</script>
+
+
+<script type="text/x-handlebars" data-template-name="components/account-info">
+
+  <fieldset>
+
+  <!-- Update information progress -->
+  {{#if updateInfoRequested}}
+    {{#if updateInfoError}}
+        <div class="alert alert-error">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <h3>An error has occur {{updateInfoError}}</h3>
+        </div>
+    {{else}}
+        <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <h3>Your account information has been updated successfully</h3>
+        </div>
+    {{/if}}
+  {{/if}}
+
+  <!-- Text input-->
+  <div class="control-group">
+    <label class="control-label" for="firstName">Name</label>
+    <div class="controls">
+      {{input id="firstName" name="firstName" type="text" placeholder="" value=accountData.firstName class="input-xlarge" required=""}}
+    </div>
+  </div>
+
+  <!-- Text input-->
+  <div class="control-group">
+    <label class="control-label" for="lastName">Last Name</label>
+    <div class="controls">
+      {{input id="lastName" name="lastName" type="text" placeholder="" value=accountData.lastName class="input-xlarge" required=""}}
+    </div>
+  </div>
+
+  <!-- Text input-->
+  {{#if accountData.middleNames}}
+    <div class="control-group">
+      <label class="control-label" for="middleNames">Middle Names</label>
+      <div class="controls">
+        {{input id="middleNames" name="middleNames" type="text" placeholder="" value=accountData.middleNames class="input-xlarge" required=""}}
+      </div>
+    </div>
+  {{/if}}
+  
+  <!-- Text input-->
+  <div class="control-group">
+    <label class="control-label" for="email">Email</label>
+    <div class="controls">
+      {{input id="email" name="email" type="text" placeholder="" value=accountData.email class="input-xlarge" required=""}}
+    </div>
+  </div>
+
+  <!-- Button -->
+  <div class="control-group">
+    <label class="control-label" for="updateAccount"></label>
+    <div class="controls">
+      <button id="updateAccount" {{action 'updateAccountInfo'accountData}} name="updateAccount" class="btn btn-primary">Update Account</button>
+    </div>
+  </div>
+
+  </fieldset>
+
+
+
+</script>

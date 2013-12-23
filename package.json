@@ -10,7 +10,8 @@
         "jade": "*",
         "connect-redis": "latest",
         "sockjs": "*",
-        "validator": "*"
+        "validator": "*",
+        "request": "latest"
     },
     "devDependencies": {
         "jshint": "*"

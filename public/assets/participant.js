@@ -1,18 +1,4 @@
 App.Participant = Ember.Object.extend({
-    loadInfo: function() {
-        var _this = this;
-        return Ember.Deferred.promise(function (p) {
-            p.resolve($.ajax({ url: "http://localhost:3001/json/participant/info" }).then(function(response) {
-                var info = {
-                    firstName: response.firstName,
-                    lastName: response.lastName,
-                    middleName: response.middleName,
-                    email: response.email
-                };
-                return info;
-            }));
-        });
-    },
     loadHistory: function() {
         return Ember.Deferred.promise(function (p) {
             p.resolve($.ajax({ url: "http://localhost:3001/json/participant/history" }).then(function(response) {
@@ -23,21 +9,6 @@ App.Participant = Ember.Object.extend({
 });
 
 App.Participant.reopenClass({
-    updateInfo: function(firstName, lastName, email, middleName) {
-        var query = '';
-        query = firstName ? (query + 'firstName=' + firstName) + '&' : query;
-        query = lastName ? (query + 'lastName=' + lastName) + '&' : query;
-        query = email ? (query + 'email=' + email) + '&' : query;
-        query = middleName ? (query + 'middleName=' + middleName) + '&' : query;
-        $.ajax({ url: 'http://localhost:3001/json/participant/changeAccountDetails?' +query });
-    },
-
-    updatePassword: function(newPassword) {
-        if (newPassword) {
-            $.ajax({ url: 'http://localhost:3001/json/participant/changePassword?newPassword=' + newPassword });
-        }
-    },
-
     purchaseAsset: function(assetId) {
         if (assetId > 0) {
             return Ember.Deferred.promise(function (p) {
@@ -47,6 +18,49 @@ App.Participant.reopenClass({
             });
         } else {
             console.log('assetId' + assetId + 'doesn\'t exists!');
+        }
+    }
+});
+
+App.ParticipantInfo = Ember.Object.extend({
+    loadInfo: function() {
+        var _this = this;
+        return Ember.Deferred.promise(function (p) {
+            p.resolve($.ajax({ url: "http://localhost:3001/json/participant/info" }).then(function(response) {
+                var info = {
+                    firstName: response.firstName,
+                    lastName: response.lastName,
+                    middleNames: response.middleNames,
+                    email: response.email
+                };
+                return info;
+            }));
+        });
+    }
+});
+
+App.ParticipantInfo.reopenClass({
+    updateInfo: function(firstName, lastName, email, middleNames) {
+
+        return Ember.Deferred.promise(function (p) {
+            var query = {
+                'firstName': firstName,
+                'lastName': lastName,
+                'email': email,
+                'middleNames': middleNames
+            };
+            p.resolve($.ajax({
+                url: "http://localhost:3001/json/participant/changeAccountDetails" ,
+                type:"POST",
+                dataType: "json",
+                data: query
+            }));
+        });
+    },
+
+    updatePassword: function(newPassword) {
+        if (newPassword) {
+            $.ajax({ url: 'http://localhost:3001/json/participant/changePassword?newPassword=' + newPassword });
         }
     }
 });
@@ -81,7 +95,7 @@ App.ParticipantPaymentMethod.reopenClass({
             });
         }
     }
-})
+});
 
 App.CreditCardComponent = Ember.Component.extend({
     classNames: ['form-horizontal'],
@@ -162,4 +176,21 @@ App.CreditCardComponent = Ember.Component.extend({
     }
 });
 
+App.AccountInfoComponent = Ember.Component.extend({
+    classNames: ['form-horizontal'],
+    tagName: 'form',
+    updateInfoRequested: false,
 
+    actions: {
+        updateAccountInfo: function(accountData) {
+            var _this = this;
+            _this.set('updateInfoRequested', true);
+
+            App.ParticipantInfo.updateInfo(accountData.firstName, accountData.lastName, accountData.email, accountData.middleNames).then(function(response) {
+                if (response.error && response.error.type) {
+                    _this.set('updateInfoError', response.error.type);
+                }
+            });
+        }
+    }
+});
