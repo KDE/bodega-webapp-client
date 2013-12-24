@@ -60,7 +60,11 @@ App.ParticipantInfo.reopenClass({
 
     updatePassword: function(newPassword) {
         if (newPassword) {
-            $.ajax({ url: 'http://localhost:3001/json/participant/changePassword?newPassword=' + newPassword });
+            return Ember.Deferred.promise(function(p) {
+                p.resolve($.ajax({ url: "http://localhost:3001/json/participant/changePassword?newPassword=" + newPassword }).then(function(response) {
+                    return response;
+                }));
+            });
         }
     }
 });
@@ -191,6 +195,41 @@ App.AccountInfoComponent = Ember.Component.extend({
                     _this.set('updateInfoError', response.error.type);
                 }
             });
+        }
+    }
+});
+
+
+App.AccountPasswordComponent = Ember.Component.extend({
+    classNames: ['form-horizontal'],
+    tagName: 'form',
+    updatePasswordRequested: false,
+    passwordsAreDifferent: false,
+
+    passwordInvalid: function(accountPassword, confirmAccountPassword) {
+        var _this = this;
+        if (accountPassword !== confirmAccountPassword) {
+            _this.set('passwordsAreDifferent', true);
+            return true;
+        } else {
+            _this.set('passwordsAreDifferent', false);
+            return false;
+        }
+    },
+
+    actions: {
+        updateAccountPassword: function(accountPassword, confirmAccountPassword) {
+            var _this = this;
+            var invalidPassword = _this.passwordInvalid(accountPassword, confirmAccountPassword);
+
+            if (!invalidPassword) {
+                _this.set('updatePasswordRequested', true);
+                App.ParticipantInfo.updatePassword(accountPassword).then(function(response) {
+                    if (response.error && response.error.type) {
+                        _this.set('updatePasswordError', response.error.type);
+                    }
+                });
+            }
         }
     }
 });
