@@ -93,9 +93,15 @@ App.ParticipantPaymentMethod.reopenClass({
             };
 
             return Ember.Deferred.promise(function (p) {
-                p.resolve($.ajax({ url: "http://localhost:3001/json/participant/changeAccountDetails?" + query }).then(function(response) {
-                    return response;
-                }));
+                p.resolve($.ajax({
+                            url: "http://localhost:3001/json/participant/changeAccountDetails",
+                            type: "POST",
+                            dataType: "json",
+                            data: query
+                         }).then(function(response) {
+                            return response;
+                         })
+                );
             });
         }
     }
