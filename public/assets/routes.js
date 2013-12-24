@@ -38,3 +38,13 @@ App.ParticipantHistoryRoute = Ember.Route.extend({
     }
 });
 
+
+App.ParticipantPointsRoute = Ember.Route.extend({
+    //We don't need to load any information in order to
+    //purchase some points. But we are creating an empty model
+    //because it is being required by emberjs.
+    model: function(params) {
+        return [];
+    }
+});
+

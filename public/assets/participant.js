@@ -19,7 +19,37 @@ App.Participant.reopenClass({
         } else {
             console.log('assetId' + assetId + 'doesn\'t exists!');
         }
-    }
+    },
+
+    pointsPrice: function() {
+        return Ember.Deferred.promise(function (p) {
+            p.resolve( $.ajax({url: 'http://localhost:3001/json/points/price' }).then(function(response) {
+                return response;
+            }));
+        });
+    },
+
+    purchasePoints: function(pointsAmount) {
+        if (pointsAmount > 0) {
+            var pointsAmountData = {
+                'amount': pointsAmount
+            };
+
+            return Ember.Deferred.promise(function (p) {
+                p.resolve( $.ajax({
+                    url: 'http://localhost:3001/json/points/buy',
+                    type: "POST",
+                    dataType: "json",
+                    data: pointsAmountData
+                }).then(function(response) {
+                    return response;
+                }));
+            });
+        } else {
+            console.log('pointsAmount is less that 0. PointsAmount: ' + pointsAmount);
+        }
+    },
+
 });
 
 App.ParticipantInfo = Ember.Object.extend({
@@ -178,7 +208,6 @@ App.CreditCardComponent = Ember.Component.extend({
             _this.cardDataIsValid(cardData);
             _this.set('updatePaymentMethodRequested', true);
             App.ParticipantPaymentMethod.updatePaymentMethod(cardData).then(function(response) {
-                console.log(response)
                 if (response.error && response.error.type) {
                     _this.set('updatePaymentMethodError', response.error.type);
                 }
@@ -237,6 +266,79 @@ App.AccountPasswordComponent = Ember.Component.extend({
                     }
                 });
             }
+        }
+    }
+});
+
+App.ParticipantPointsComponent = Ember.Component.extend({
+    classNames: ['form-horizontal'],
+    tagName: 'form',
+    purchasePointsRequested: false,
+    pointsTypeChoice: 500,
+    validPoints: -1,
+    invalidAmountPoints: false,
+    pointsPrice: App.Participant.pointsPrice(),
+
+    eventManager: Ember.Object.create({
+        mouseEnter: function(event, view) {
+            var otherValuePointsCheckbox = $("#otherValuePointsCheckbox");
+            var pointsRadio = $('input[type="radio"]');
+
+            otherValuePointsCheckbox.click(function() {
+                pointsRadio.prop('checked', false);
+            })
+
+            pointsRadio.click(function() {
+                otherValuePointsCheckbox.prop('checked', false);
+            })
+        }
+    }),
+
+    calculatePoints: function(otherPointsAmount, pointsAmount) {
+        var _this = this;
+        var validPoints = _this.get('validPoints');
+        _this.get('pointsPrice').then(function(response) {
+            var realPrice = response.USD;
+
+            validPoints = pointsAmount > 0 ? pointsAmount : otherPointsAmount;
+            _this.set('validPoints', validPoints);
+            if (validPoints > 0) {
+                _this.set('pointsCost', validPoints * realPrice);
+            } else {
+                _this.set('pointsCost', 'You must select a valid number of points');
+            }
+        });
+    },
+
+    actions: {
+        purchasePoints: function(otherPointsAmount, pointsAmount) {
+            var _this = this;
+            var validPoints = _this.get('validPoints');
+
+            validPoints = pointsAmount > 0 ? pointsAmount : otherPointsAmount;
+            if (validPoints) {
+                _this.set('purchasePointsRequested', true);
+                _this.set('invalidAmountPoints', false);
+                App.Participant.purchasePoints(validPoints).then(function(response) {
+                    console.log(response)
+                    if (response.error && response.error.type) {
+                        _this.set('purchasePointsError', response.error.type);
+                    }
+                });
+            } else {
+                _this.set('invalidAmountPoints', true);
+            }
+
+            //After the purchase is being finished,
+            //we are closing the modal manualy.
+            $("#purchasePointsModal").modal('hide');
+        },
+
+        modalConfirm: function(otherPointsAmount, pointsAmount) {
+            $("#purchasePointsModal").modal('show');
+
+            var _this = this;
+            _this.calculatePoints(otherPointsAmount, pointsAmount);
         }
     }
 });

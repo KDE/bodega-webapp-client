@@ -10,5 +10,6 @@ App.Router.map(function() {
     this.resource('participantPaymentMethod', { path: '/participant/paymentMethod'});
     this.resource('participantHistory', { path: '/participant/history' });
     this.resource('participantInfo', { path: '/participant/info' });
+    this.resource('participantPoints', { path: '/participant/points' });
 });
 
