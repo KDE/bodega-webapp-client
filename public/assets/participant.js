@@ -54,6 +54,8 @@ App.ParticipantInfo.reopenClass({
                 type:"POST",
                 dataType: "json",
                 data: query
+            }).then(function(response) {
+                return response;
             }));
         });
     },
