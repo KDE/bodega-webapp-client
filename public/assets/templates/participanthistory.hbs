@@ -1,10 +1,29 @@
 <script type="text/x-handlebars" data-template-name="participantHistory">
+  <ul class="nav nav-list well">
+    <li class="nav-header"> Account History
+      {{#each item in model}}
+        {{participant-history historyData=item}}
+      {{/each}}
+    </li>
+  </ul>
 
-  {{#each item in model}}
-    <ul><li>
-        {{item.what}}
-    </li></ul>
-  {{/each}}
 
 </script>
+
+
+<script type="text/x-handlebars" data-template-name="components/participant-history">
+        <li><a>
+            Added {{historyData.what}} {{historyData.category}}
+        </a></li>
+        <li><a>
+            {{historyData.comment}}
+        </a></li>
+              <li><a>
+            {{localeDate}}
+        </a></li>
+        <li class="divider"></li>
+
+</script>
+
+
 

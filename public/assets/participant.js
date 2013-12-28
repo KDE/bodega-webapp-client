@@ -342,3 +342,15 @@ App.ParticipantPointsComponent = Ember.Component.extend({
         }
     }
 });
+
+App.ParticipantHistoryComponent = Ember.Component.extend({
+    localeDate: function() {
+        var _this = this;
+        var historyData = _this.get('historyData');
+
+        var date = new Date(historyData.date);
+        var localDate = date.toLocaleDateString();
+        var localTime = date.toLocaleTimeString();
+        return localDate + ' ' + localTime;
+    }.property(),
+});
