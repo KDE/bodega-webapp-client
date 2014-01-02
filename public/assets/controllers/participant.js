@@ -40,6 +40,5 @@ App.ParticipantInfoController = Ember.ObjectController.extend({
             return false;
         }
     },
-
 });
 
