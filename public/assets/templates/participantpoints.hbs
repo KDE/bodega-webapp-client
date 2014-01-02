@@ -1,106 +1,102 @@
 <script type="text/x-handlebars" data-template-name="participantPoints">
 
-  {{participant-points}}
+  <form class="form-horizontal">
+    <fieldset>
 
-</script>
-
-
-<script type="text/x-handlebars" data-template-name="components/participant-points">
-  <fieldset>
-
-  <!-- Update purchase points progress -->
-  {{#if purchasePointsRequested}}
-    {{#if purchasePointsError}}
-        <div class="alert alert-error">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <h3>An error has occur {{purchasePointsError}}</h3>
-        </div>
-    {{else}}
-        <div class="alert alert-success">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <h3>Your points has been purchased successfully</h3>
-        </div>
+    <!-- Update purchase points progress -->
+    {{#if purchasePointsRequested}}
+      {{#if purchasePointsError}}
+          <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h3>An error has occur {{purchasePointsError}}</h3>
+          </div>
+      {{else}}
+          <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h3>Your points has been purchased successfully</h3>
+          </div>
+      {{/if}}
     {{/if}}
-  {{/if}}
 
-  <!-- Text input-->
-  <div class="control-group">
-    <label class="control-label" for="redeemCode">Redeem Code</label>
-    <div class="controls">
-      {{input id="redeemCode" name="redeemCode" type="text" placeholder="Enter Your Code" value=redeemCode class="input-xlarge"}}
-    </div>
-  </div>
-
-  <!-- Button -->
-  <div class="control-group">
-    <label class="control-label" for="reddemButton"></label>
-    <div class="controls">
-      <button id="reddemButton" name="reddemButton" class="btn btn-primary">Reddem</button>
-    </div>
-  </div>
-
-  <!-- Multiple Radios -->
-  <div class="control-group">
-    <label class="control-label" for="pointsRadio">Purchase Points</label>
-    <div class="controls">
-      <label class="radio" for="pointsRadio-0">
-        {{view Ember.RadioButton name="pointsTypeSelection" selectionBinding="pointsTypeChoice" value="500"}}
-        500
-      </label>
-      <label class="radio" for="pointsRadio-1">
-        {{view Ember.RadioButton name="pointsTypeSelection" selectionBinding="pointsTypeChoice" value="1000"}}
-        1000
-      </label>
-      <label class="radio" for="pointsRadio-2">
-        {{view Ember.RadioButton name="pointsTypeSelection" selectionBinding="pointsTypeChoice" value="5000"}}
-        5000
-      </label>
-      <label class="radio" for="pointsRadio-3">
-        {{view Ember.RadioButton name="pointsTypeSelection" selectionBinding="pointsTypeChoice" value="10000"}}
-        10000
-      </label>
-    </div>
-  </div>
-
-  <!-- Prepended checkbox -->
-  <div class="control-group">
-    <label class="control-label" for="otherValuePoints"></label>
-    <div class="controls">
-      <div class="input-prepend">
-        <span class="add-on">
-          <label class="checkbox">
-            <input id="otherValuePointsCheckbox" type="checkbox">
-          </label>
-        </span>
-        {{input id="otherValuePoints" name="otherValuePoints" class="input-medium" type="text" value=otherPointsAmount placeholder="Other Value"}}
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="redeemCode">Redeem Code</label>
+      <div class="controls">
+        {{input id="redeemCode" name="redeemCode" type="text" placeholder="Enter Your Code" value=redeemCode class="input-xlarge"}}
       </div>
     </div>
-  </div>
 
-  <!-- Button -->
-  <div class="control-group">
-    <label class="control-label" for="purchaseButton"></label>
-    <div class="controls">
-      <a  {{action 'modalConfirm' otherPointsAmount pointsTypeChoice}}  role="button" class="btn btn-primary" data-toggle="modal">Purchase</a>
-      <!-- Button to trigger modal -->
+    <!-- Button -->
+    <div class="control-group">
+      <label class="control-label" for="reddemButton"></label>
+      <div class="controls">
+        <button id="reddemButton" name="reddemButton" class="btn btn-primary">Reddem</button>
+      </div>
+    </div>
 
-      <!-- Modal -->
-      <div id="purchasePointsModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h3 id="myModalLabel">Purchase Points</h3>
-        </div>
-        <div class="modal-body">
-          <p>You are about to purchase {{validPoints}} for {{pointsCost}} USD</p>
-        </div>
-        <div class="modal-footer">
-          <button class="btn" data-dismiss="modal" aria-hidden="true">Not Now</button>
-          <button {{action 'purchasePoints' otherPointsAmount pointsTypeChoice}} class="btn btn-primary">Purchase Now!</button>
+    <!-- Multiple Radios -->
+    <div class="control-group">
+      <label class="control-label" for="pointsRadio">Purchase Points</label>
+      <div class="controls">
+        <label class="radio" for="pointsRadio-0">
+          {{view Ember.RadioButton name="pointsTypeSelection" selectionBinding="pointsTypeChoice" value="500"}}
+          500
+        </label>
+        <label class="radio" for="pointsRadio-1">
+          {{view Ember.RadioButton name="pointsTypeSelection" selectionBinding="pointsTypeChoice" value="1000"}}
+          1000
+        </label>
+        <label class="radio" for="pointsRadio-2">
+          {{view Ember.RadioButton name="pointsTypeSelection" selectionBinding="pointsTypeChoice" value="5000"}}
+          5000
+        </label>
+        <label class="radio" for="pointsRadio-3">
+          {{view Ember.RadioButton name="pointsTypeSelection" selectionBinding="pointsTypeChoice" value="10000"}}
+          10000
+        </label>
+      </div>
+    </div>
+
+    <!-- Prepended checkbox -->
+    <div class="control-group">
+      <label class="control-label" for="otherValuePoints"></label>
+      <div class="controls">
+        <div class="input-prepend">
+          <span class="add-on">
+            <label class="checkbox">
+              <input id="otherValuePointsCheckbox" type="checkbox">
+            </label>
+          </span>
+          {{input id="otherValuePoints" name="otherValuePoints" class="input-medium" type="text" value=otherPointsAmount placeholder="Other Value"}}
         </div>
       </div>
     </div>
-  </div>
-  </fieldset>
+
+    <!-- Button -->
+    <div class="control-group">
+      <label class="control-label" for="purchaseButton"></label>
+      <div class="controls">
+        <a  {{action 'modalConfirm' otherPointsAmount pointsTypeChoice}}  role="button" class="btn btn-primary" data-toggle="modal">Purchase</a>
+        <!-- Button to trigger modal -->
+
+        <!-- Modal -->
+        <div id="purchasePointsModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Purchase Points</h3>
+          </div>
+          <div class="modal-body">
+            <p>You are about to purchase {{validPoints}} for {{pointsCost}} USD</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Not Now</button>
+            <button {{action 'purchasePoints' otherPointsAmount pointsTypeChoice}} class="btn btn-primary">Purchase Now!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </fieldset>
+  </form>
 
 </script>
 
