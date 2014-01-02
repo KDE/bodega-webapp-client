@@ -209,25 +209,6 @@ App.CreditCardComponent = Ember.Component.extend({
     }
 });
 
-App.AccountInfoComponent = Ember.Component.extend({
-    classNames: ['form-horizontal'],
-    tagName: 'form',
-    updateInfoRequested: false,
-
-    actions: {
-        updateAccountInfo: function(accountData) {
-            var _this = this;
-            _this.set('updateInfoRequested', true);
-
-            App.ParticipantInfo.updateInfo(accountData.firstName, accountData.lastName, accountData.email, accountData.middleNames).then(function(response) {
-                if (response.error && response.error.type) {
-                    _this.set('updateInfoError', response.error.type);
-                }
-            });
-        }
-    }
-});
-
 App.AccountPasswordComponent = Ember.Component.extend({
     classNames: ['form-horizontal'],
     tagName: 'form',
