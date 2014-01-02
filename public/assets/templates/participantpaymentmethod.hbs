@@ -1,128 +1,122 @@
+<script src="/js/validator-min.js"></script>
+
 <script type="text/x-handlebars" data-template-name="participantPaymentMethod">
-  {{#if model.error}}
-    {{credit-card error=model.error}}
-  {{else}}
-    {{credit-card cardData=model}}
-  {{/if}}
-</script>
+  <form class="form-horizontal">
+    <fieldset>
 
-
-<script type="text/x-handlebars" data-template-name="components/credit-card">
-
-  <fieldset>
-
-  <!-- Update information progress -->
-  {{#if updatePaymentMethodRequested}}
-    {{#if updatePaymentMethodError}}
-        <div class="alert alert-error">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <h3>An error has occur {{updatePaymentMethodError}}</h3>
-        </div>
-    {{else}}
-        <div class="alert alert-success">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <h3>Your credit card information has been updated successfully</h3>
-        </div>
+    <!-- Update information progress -->
+    {{#if updatePaymentMethodRequested}}
+      {{#if updatePaymentMethodError}}
+          <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h3>An error has occur {{updatePaymentMethodError}}</h3>
+          </div>
+      {{else}}
+          <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h3>Your credit card information has been updated successfully</h3>
+          </div>
+      {{/if}}
     {{/if}}
-  {{/if}}
 
-  <!-- Multiple Radios -->
-  <div class="control-group">
-    <label class="control-label" for="cardType">Card Type</label>
-    <div class="controls">
-      <label class="radio" for="cardType-0">
-        {{view Ember.RadioButton name="cardTypeSelection" selectionBinding="cardTypeChoice" value="Visa"}}
-        Visa
-      </label>
-      <label class="radio" for="cardType-1">
-        {{view Ember.RadioButton name="cardTypeSelection" selectionBinding="cardTypeChoice" value="Master Card"}}
-        Master Card
-      </label>
-      <label class="radio" for="cardType-2">
-        {{view Ember.RadioButton name="cardTypeSelection" selectionBinding="cardTypeChoice" value="American Express"}}
-        American Express
-      </label>
-      <label class="radio" for="cardType-3">
-        {{view Ember.RadioButton name="cardTypeSelection" selectionBinding="cardTypeChoice" value="Dinners Club"}}
-        Dinners Club
-      </label>
+    <!-- Multiple Radios -->
+    <div class="control-group">
+      <label class="control-label" for="cardType">Card Type</label>
+      <div class="controls">
+        <label class="radio" for="cardType-0">
+          {{view Ember.RadioButton name="cardTypeSelection" selectionBinding="cardTypeChoice" value="Visa"}}
+          Visa
+        </label>
+        <label class="radio" for="cardType-1">
+          {{view Ember.RadioButton name="cardTypeSelection" selectionBinding="cardTypeChoice" value="Master Card"}}
+          Master Card
+        </label>
+        <label class="radio" for="cardType-2">
+          {{view Ember.RadioButton name="cardTypeSelection" selectionBinding="cardTypeChoice" value="American Express"}}
+          American Express
+        </label>
+        <label class="radio" for="cardType-3">
+          {{view Ember.RadioButton name="cardTypeSelection" selectionBinding="cardTypeChoice" value="Dinners Club"}}
+          Dinners Club
+        </label>
+      </div>
     </div>
-  </div>
 
-  <!-- Text input-->
-  <div class="control-group">
-    <label class="control-label" for="cardName">Name on Card:</label>
-    <div class="controls">
-      {{input id="cardName" name="cardName" type="text" placeholder="Please type your full name" class="input-xlarge" value=cardName}}
-      {{#if cardNameInvalid}}
-        <p class="text-error">Your name is not valid</p>
-      {{/if}}
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="cardName">Name on Card:</label>
+      <div class="controls">
+        {{input id="cardName" name="cardName" type="text" placeholder="Please type your full name" class="input-xlarge" value=cardName}}
+        {{#if cardNameInvalid}}
+          <p class="text-error">Your name is not valid</p>
+        {{/if}}
+      </div>
     </div>
-  </div>
 
-  <!-- Text input-->
-  <div class="control-group">
-    <label class="control-label" for="cardNumber">Number:</label>
-    <div class="controls">
-      {{input id="cardNumber" name="cardNumber" type="text" placeholder="Please type your card number" class="input-xlarge" value=cardNumber required=""}}
-      {{#if cardNumberInvalid}}
-        <p class="text-error">Your card number is not valid</p>
-      {{/if}}
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="cardNumber">Number:</label>
+      <div class="controls">
+        {{input id="cardNumber" name="cardNumber" type="text" placeholder="Please type your card number" class="input-xlarge" value=cardNumber required=""}}
+        {{#if cardNumberInvalid}}
+          <p class="text-error">Your card number is not valid</p>
+        {{/if}}
+      </div>
     </div>
-  </div>
 
-  <!-- Text input-->
-  <div class="control-group">
-    <label class="control-label" for="cardCvc">CVC:</label>
-    <div class="controls">
-      {{input id="cardCvc" name="cardCvc" type="text" placeholder="Please type your cvc" class="input-xlarge" value=cardCvc required=""}}
-      {{#if cardCvcInvalid}}
-          <p class="text-error">Your cvc number is not valid</p>
-      {{/if}}
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="cardCvc">CVC:</label>
+      <div class="controls">
+        {{input id="cardCvc" name="cardCvc" type="text" placeholder="Please type your cvc" class="input-xlarge" value=cardCvc required=""}}
+        {{#if cardCvcInvalid}}
+            <p class="text-error">Your cvc number is not valid</p>
+        {{/if}}
+      </div>
     </div>
-  </div>
 
-  <!-- Select Basic -->
-  <div class="control-group">
-    <label class="control-label" for="cardExpMonth">Expire Month:</label>
-    <div class="controls">
-    {{view Ember.Select
-       content=cardExpMonthChoices
-       value=cardExpMonthChoice
-    }}
-
-    </div>
-  </div>
-
-  <!-- Select Basic -->
-  <div class="control-group">
-    <label class="control-label" for="cardExpYear">Expire Year:</label>
-    <div class="controls">
+    <!-- Select Basic -->
+    <div class="control-group">
+      <label class="control-label" for="cardExpMonth">Expire Month:</label>
+      <div class="controls">
       {{view Ember.Select
-       content=cardExpYearChoices
-       value=cardExpYearChoice
+        content=cardExpMonthChoices
+        value=cardExpMonthChoice
       }}
-    </div>
-  </div>
 
-  {{#if purchaseMethodMissing}}
-    <!-- Button -->
-    <div class="control-group">
-      <label class="control-label" for="addCreditCard"></label>
-      <div class="controls">
-        <button id="addCreditCard" {{action 'updatePaymentMethod'}} name="addCreditCard" class="btn btn-primary">Add Your Credit Card</button>
       </div>
     </div>
-  {{else}}
-    <!-- Button -->
+
+    <!-- Select Basic -->
     <div class="control-group">
-      <label class="control-label" for="updateCreditCard"></label>
+      <label class="control-label" for="cardExpYear">Expire Year:</label>
       <div class="controls">
-        <button id="updateCreditCard" name="updateCreditCard" class="btn btn-primary">Update Your Credit Card</button>
+        {{view Ember.Select
+        content=cardExpYearChoices
+        value=cardExpYearChoice
+        }}
       </div>
     </div>
-  {{/if}}
 
-  </fieldset>
+    {{#if purchaseMethodMissing}}
+      <!-- Button -->
+      <div class="control-group">
+        <label class="control-label" for="addCreditCard"></label>
+        <div class="controls">
+          <button id="addCreditCard" {{action 'updatePaymentMethod'}} name="addCreditCard" class="btn btn-primary">Add Your Credit Card</button>
+        </div>
+      </div>
+    {{else}}
+      <!-- Button -->
+      <div class="control-group">
+        <label class="control-label" for="updateCreditCard"></label>
+        <div class="controls">
+          <button id="updateCreditCard" name="updateCreditCard" class="btn btn-primary">Update Your Credit Card</button>
+        </div>
+      </div>
+    {{/if}}
+
+    </fieldset>
+  </form>
 </script>
 

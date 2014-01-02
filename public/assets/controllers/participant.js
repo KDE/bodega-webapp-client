@@ -97,3 +97,97 @@ App.ParticipantPointsController = Ember.ObjectController.extend({
         }
     }
 });
+
+App.ParticipantPaymentMethodController = Ember.ObjectController.extend({
+    cardExpMonthChoice: null,
+    cardExpYearChoice: null,
+    cardTypeChoice: null,
+    cardNameInvalid: false,
+    cardNumberInvalid: false,
+    cardCvcInvalid: false,
+    updatePaymentMethodRequested: false,
+
+    cardExpMonthChoices: function() {
+        var _this = this;
+        var choice = Ember.A();
+        $.map($(Array(12)),function(val, i) {
+              choice.pushObject(i+1);
+        })
+        return choice;
+    }.property(),
+
+    cardExpYearChoices: function() {
+        var _this = this;
+        var choice = Ember.A();
+        var date = new Date();
+        var currentYear = date.getFullYear();
+        $.map($(Array(30)),function(val, i) {
+              choice.pushObject(i+currentYear);
+        })
+
+        return choice;
+    }.property(),
+
+    purchaseMethodMissing: function() {
+        var _this = this;
+        var error = _this.get('error');
+        if (error && error.type) {
+            return error.type === 'PurchaseMethodMissing';
+        }
+    }.property(),
+
+
+    retrieveCardData: function() {
+        var _this = this;
+        var cardData = {
+            'card': _this.get('cardTypeChoice'),
+            'inputName': _this.get('cardName'),
+            'inputNumber': _this.get('cardNumber'),
+            'inputCvc': _this.get('cardCvc'),
+            'inputMonthExpires': _this.get('cardExpMonthChoice'),
+            'inputYearExpires': _this.get('cardExpYearChoice')
+        };
+
+        return cardData;
+    },
+
+    cardDataIsValid: function(cardData) {
+        try {
+            check(cardData['inputName']).isAlpha();
+            this.set('cardNameInvalid', false);
+        } catch (e) {
+            this.set('cardNameInvalid', true)
+        }
+
+        try {
+            check(cardData['inputNumber']).isInt();
+            this.set('cardNumberInvalid', false);
+        } catch (e) {
+            this.set('cardNumberInvalid', true)
+        }
+
+        try {
+            check(cardData['inputCvc']).isInt();
+            this.set('cardCvcInvalid', false);
+        } catch (e) {
+            this.set('cardCvcInvalid', true)
+        }
+
+    },
+
+    actions: {
+        updatePaymentMethod: function() {
+            var _this = this;
+            var cardData = _this.retrieveCardData();
+            _this.cardDataIsValid(cardData);
+            console.log(cardData)
+            _this.set('updatePaymentMethodRequested', true);
+            App.ParticipantPaymentMethod.updatePaymentMethod(cardData).then(function(response) {
+                if (response.error && response.error.type) {
+                    _this.set('updatePaymentMethodError', response.error.type);
+                }
+            });
+        }
+    }
+});
+
