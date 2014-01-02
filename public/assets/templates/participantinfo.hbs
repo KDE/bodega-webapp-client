@@ -1,4 +1,5 @@
 <script type="text/x-handlebars" data-template-name="participantInfo">
+  <!-- Information form-->
   <form class="form-horizontal">
     <fieldset>
 
@@ -62,61 +63,57 @@
     </fieldset>
   </form>
 
+  <!-- Password form-->
+  <form class="form-horizontal">
+    <fieldset>
 
-  {{account-password}}
-
-</script>
-
-<script type="text/x-handlebars" data-template-name="components/account-password">
-
-  <fieldset>
-
-  <!-- Update password progress -->
-  {{#if updatePasswordRequested}}
-    {{#if updatePasswordError}}
-        <div class="alert alert-error">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <h3>An error has occur {{updatePasswordError}}</h3>
-        </div>
-    {{else}}
-        <div class="alert alert-success">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <h3>Your account password has been updated successfully</h3>
-        </div>
+    <!-- Update password progress -->
+    {{#if updatePasswordRequested}}
+      {{#if updatePasswordError}}
+          <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h3>An error has occur {{updatePasswordError}}</h3>
+          </div>
+      {{else}}
+          <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h3>Your account password has been updated successfully</h3>
+          </div>
+      {{/if}}
     {{/if}}
-  {{/if}}
 
-  <!-- Password input-->
-  <div class="control-group">
-    <label class="control-label" for="passwordInput">New Password</label>
-    <div class="controls">
-      {{input id="passwordInput" name="passwordInput" type="password" placeholder="Type your new password" value=accountPassword class="input-xlarge" required=""}}
-      {{#if passwordsAreDifferent}}
-        <p class="text-error">Your passwords doesn't match</p>
-      {{/if}}
+    <!-- Password input-->
+    <div class="control-group">
+      <label class="control-label" for="passwordInput">New Password</label>
+      <div class="controls">
+        {{input id="passwordInput" name="passwordInput" type="password" placeholder="Type your new password" value=accountPassword class="input-xlarge" required=""}}
+        {{#if passwordsAreDifferent}}
+          <p class="text-error">Your passwords doesn't match</p>
+        {{/if}}
+      </div>
     </div>
-  </div>
 
-  <!-- Password input-->
-  <div class="control-group">
-    <label class="control-label" for="passwordConfirm">Confirm Password</label>
-    <div class="controls">
-      {{input id="passwordConfirm" name="passwordConfirm" type="password" placeholder="Retype your password" value=confirmAccountPassword class="input-xlarge" required=""}}
-      {{#if passwordsAreDifferent}}
-        <p class="text-error">Your passwords doesn't match</p>
-      {{/if}}
+    <!-- Password input-->
+    <div class="control-group">
+      <label class="control-label" for="passwordConfirm">Confirm Password</label>
+      <div class="controls">
+        {{input id="passwordConfirm" name="passwordConfirm" type="password" placeholder="Retype your password" value=confirmAccountPassword class="input-xlarge" required=""}}
+        {{#if passwordsAreDifferent}}
+          <p class="text-error">Your passwords doesn't match</p>
+        {{/if}}
+      </div>
     </div>
-  </div>
 
-  <!-- Button -->
-  <div class="control-group">
-    <label class="control-label" for="updatePassword"></label>
-    <div class="controls">
-      <button id="updatePassword" {{action 'updateAccountPassword' accountPassword confirmAccountPassword}} name="updatePassword" class="btn btn-primary">Update Password</button>
+    <!-- Button -->
+    <div class="control-group">
+      <label class="control-label" for="updatePassword"></label>
+      <div class="controls">
+        <button id="updatePassword" {{action 'updateAccountPassword' accountPassword confirmAccountPassword}} name="updatePassword" class="btn btn-primary">Update Password</button>
+      </div>
     </div>
-  </div>
 
-  </fieldset>
+    </fieldset>
+  </form>
 
 </script>
 
