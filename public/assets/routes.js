@@ -34,10 +34,16 @@ App.ParticipantPaymentMethodRoute = Ember.Route.extend({
 
 App.ParticipantHistoryRoute = Ember.Route.extend({
     model: function(params) {
-        return App.Participant.create().loadHistory();
+        return App.ParticipantHistory.retrieveHistoryData().then(function(data) {
+            var result = [];
+            data.history.forEach(function(item) {
+                result.push(App.ParticipantHistory.create(item));
+            });
+
+            return result;
+        });
     }
 });
-
 
 App.ParticipantPointsRoute = Ember.Route.extend({
     //We don't need to load any information in order to

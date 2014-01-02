@@ -1,11 +1,4 @@
 App.Participant = Ember.Object.extend({
-    loadHistory: function() {
-        return Ember.Deferred.promise(function (p) {
-            p.resolve($.ajax({ url: "http://localhost:3001/json/participant/history" }).then(function(response) {
-                return response.history;
-            }));
-        });
-    }
 });
 
 App.Participant.reopenClass({
@@ -235,7 +228,6 @@ App.AccountInfoComponent = Ember.Component.extend({
     }
 });
 
-
 App.AccountPasswordComponent = Ember.Component.extend({
     classNames: ['form-horizontal'],
     tagName: 'form',
@@ -343,14 +335,19 @@ App.ParticipantPointsComponent = Ember.Component.extend({
     }
 });
 
-App.ParticipantHistoryComponent = Ember.Component.extend({
+App.ParticipantHistory = Ember.Object.extend({
     localeDate: function() {
-        var _this = this;
-        var historyData = _this.get('historyData');
+        var date = new Date(this.get('date'));
+        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+    }.property('date')
+});
 
-        var date = new Date(historyData.date);
-        var localDate = date.toLocaleDateString();
-        var localTime = date.toLocaleTimeString();
-        return localDate + ' ' + localTime;
-    }.property(),
+App.ParticipantHistory.reopenClass({
+    retrieveHistoryData: function() {
+        return Ember.Deferred.promise(function (p) {
+            p.resolve($.ajax({ url: "http://localhost:3001/json/participant/history" }).then(function(response) {
+                return response;
+            }));
+        });
+    }
 });

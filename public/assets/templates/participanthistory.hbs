@@ -2,28 +2,17 @@
   <ul class="nav nav-list well">
     <li class="nav-header"> Account History
       {{#each item in model}}
-        {{participant-history historyData=item}}
+        <li><a>
+          Added {{item.what}} {{item.category}}
+        </a></li>
+        <li><a>
+          {{item.comment}}
+        </a></li>
+        <li><a>
+          {{item.localeDate}}
+        </a></li>
+        <li class="divider"></li>
       {{/each}}
     </li>
   </ul>
-
-
 </script>
-
-
-<script type="text/x-handlebars" data-template-name="components/participant-history">
-        <li><a>
-            Added {{historyData.what}} {{historyData.category}}
-        </a></li>
-        <li><a>
-            {{historyData.comment}}
-        </a></li>
-              <li><a>
-            {{localeDate}}
-        </a></li>
-        <li class="divider"></li>
-
-</script>
-
-
-
